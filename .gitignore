@@ -1,0 +1,104 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+.idea/
+target/
+*.log
+.env
+*.db
+*.mv.db
+node_modules/
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+
+# =========================
+# Maven / Build
+# =========================
+target/
+out/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+application-local.properties
+src/main/java/com/dictionary/init/DataInitializer.java
+
+# =========================
+# Database Files
+# =========================
+*.db
+*.mv.db
+*.sqlite
+
+# =========================
+# Uploads
+# =========================
+uploads/
+
+# =========================
+# Personal Initializer
+# =========================
+src/main/java/com/dictionary/init/DataInitializer.java
+
+# =========================
+# Sensitive Config
+# =========================
+src/main/resources/application-local.properties
+
+# =========================
+# Node Modules (if frontend later added)
+# =========================
+node_modules/
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.temp

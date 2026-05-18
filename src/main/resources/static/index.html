@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>LughatPro — English-Urdu Dictionary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+          --gold: #c9a84c;
+          --gold-light: #e8c96e;
+          --dark: #0f0f14;
+          --dark2: #1a1a24;
+          --dark3: #252533;
+          --emerald: #2dd4bf;
+          --text-muted: #8b8b9a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: 'DM Sans', sans-serif;
+          background: var(--dark);
+          min-height: 100vh;
+          overflow-x: hidden;
+        }
+        .urdu { font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif; direction: rtl; }
+
+        /* Animated background */
+        .bg-mesh {
+          position: fixed; inset: 0; z-index: 0;
+          background:
+            radial-gradient(ellipse 80% 50% at 20% 10%, rgba(201,168,76,0.12) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 80% 90%, rgba(45,212,191,0.08) 0%, transparent 60%),
+            var(--dark);
+        }
+        .grid-lines {
+          position: fixed; inset: 0; z-index: 0;
+          background-image:
+            linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+          background-size: 60px 60px;
+        }
+        .orb {
+          position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none;
+          animation: float 8s ease-in-out infinite;
+        }
+        .orb-1 { width: 400px; height: 400px; top: -100px; left: -100px;
+          background: rgba(201,168,76,0.06); animation-delay: 0s; }
+        .orb-2 { width: 300px; height: 300px; bottom: -80px; right: -80px;
+          background: rgba(45,212,191,0.05); animation-delay: -4s; }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* Main container */
+        .container { position: relative; z-index: 10; min-height: 100vh;
+          display: flex; align-items: center; justify-content: center; padding: 2rem; }
+
+        /* Card */
+        .auth-card {
+          width: 100%; max-width: 480px;
+          background: linear-gradient(135deg, rgba(37,37,51,0.9) 0%, rgba(26,26,36,0.95) 100%);
+          border: 1px solid rgba(201,168,76,0.2);
+          border-radius: 24px;
+          backdrop-filter: blur(20px);
+          box-shadow: 0 0 80px rgba(0,0,0,0.5), 0 0 1px rgba(201,168,76,0.3) inset;
+          overflow: hidden;
+        }
+        .card-header {
+          padding: 2.5rem 2.5rem 0;
+          text-align: center;
+        }
+        .logo-circle {
+          width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 1.5rem;
+          background: linear-gradient(135deg, var(--gold), var(--gold-light));
+          display: flex; align-items: center; justify-content: center;
+          font-size: 1.8rem;
+          box-shadow: 0 0 30px rgba(201,168,76,0.4);
+        }
+        .app-name {
+          font-family: 'Playfair Display', serif;
+          font-size: 2rem; font-weight: 900;
+          background: linear-gradient(135deg, var(--gold-light), var(--gold));
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .app-tagline { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.4rem; }
+
+        /* Tabs */
+        .tab-container {
+          display: flex; margin: 2rem 2.5rem 0; gap: 0;
+          background: rgba(15,15,20,0.6); border-radius: 12px; padding: 4px;
+        }
+        .tab-btn {
+          flex: 1; padding: 0.65rem; border: none; background: transparent;
+          color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+          font-size: 0.9rem; font-weight: 500; border-radius: 8px;
+          cursor: pointer; transition: all 0.3s;
+        }
+        .tab-btn.active {
+          background: linear-gradient(135deg, var(--gold), #b8952e);
+          color: #0f0f14; font-weight: 600;
+          box-shadow: 0 2px 12px rgba(201,168,76,0.3);
+        }
+
+        /* Form */
+        .form-body { padding: 2rem 2.5rem 2.5rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-label {
+          display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+          text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem;
+        }
+        .form-input {
+          width: 100%; padding: 0.75rem 1rem;
+          background: rgba(15,15,20,0.7);
+          border: 1px solid rgba(201,168,76,0.15);
+          border-radius: 10px; color: #e8e8f0;
+          font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+          transition: all 0.3s; outline: none;
+        }
+        .form-input::placeholder { color: rgba(139,139,154,0.5); }
+        .form-input:focus {
+          border-color: var(--gold); background: rgba(15,15,20,0.9);
+          box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+        }
+        .form-input.error { border-color: #ef4444; }
+
+        /* Password toggle */
+        .input-group { position: relative; }
+        .input-group .form-input { padding-right: 3rem; }
+        .toggle-pass {
+          position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
+          background: none; border: none; cursor: pointer; color: var(--text-muted);
+          font-size: 1.1rem; padding: 0.25rem;
+        }
+
+        /* Role select */
+        .form-select {
+          width: 100%; padding: 0.75rem 1rem;
+          background: rgba(15,15,20,0.7);
+          border: 1px solid rgba(201,168,76,0.15);
+          border-radius: 10px; color: #e8e8f0;
+          font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+          appearance: none; cursor: pointer; outline: none;
+          transition: all 0.3s;
+        }
+        .form-select:focus {
+          border-color: var(--gold);
+          box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+        }
+        .form-select option { background: var(--dark2); }
+
+        /* Submit button */
+        .btn-submit {
+          width: 100%; padding: 0.9rem;
+          background: linear-gradient(135deg, var(--gold), #b8952e);
+          border: none; border-radius: 12px;
+          font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700;
+          color: #0f0f14; cursor: pointer; margin-top: 0.5rem;
+          transition: all 0.3s;
+          position: relative; overflow: hidden;
+        }
+        .btn-submit::before {
+          content: ''; position: absolute; inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+          opacity: 0; transition: opacity 0.3s;
+        }
+        .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(201,168,76,0.4); }
+        .btn-submit:hover::before { opacity: 1; }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* Alert */
+        .alert {
+          padding: 0.8rem 1rem; border-radius: 10px;
+          font-size: 0.88rem; font-weight: 500; margin-bottom: 1rem;
+          display: none;
+        }
+        .alert-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+        .alert-success { background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.3); color: #5eead4; }
+        .alert.show { display: block; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+        /* Demo credentials */
+        .demo-creds {
+          margin: 1.2rem 0 0;
+          padding: 1rem; border-radius: 10px;
+          background: rgba(45,212,191,0.06);
+          border: 1px solid rgba(45,212,191,0.15);
+        }
+        .demo-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em;
+          color: var(--emerald); font-weight: 600; margin-bottom: 0.6rem; }
+        .demo-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
+        .demo-row:last-child { margin-bottom: 0; }
+        .demo-label { font-size: 0.8rem; color: var(--text-muted); }
+        .demo-val { font-size: 0.8rem; color: #e8e8f0; font-weight: 500;
+          cursor: pointer; background: rgba(45,212,191,0.1); padding: 2px 8px; border-radius: 4px; }
+        .demo-val:hover { background: rgba(45,212,191,0.2); }
+
+        /* Decorative footer */
+        .card-footer {
+          border-top: 1px solid rgba(201,168,76,0.1);
+          padding: 1.2rem 2.5rem;
+          display: flex; justify-content: center; gap: 0.5rem;
+          flex-wrap: wrap;
+        }
+        .feature-badge {
+          font-size: 0.72rem; color: var(--text-muted);
+          background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+          padding: 4px 10px; border-radius: 20px;
+        }
+
+        /* Spinner */
+        .spinner {
+          display: inline-block; width: 16px; height: 16px;
+          border: 2px solid rgba(0,0,0,0.3); border-top-color: #0f0f14;
+          border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Responsive */
+        @media (max-width: 520px) {
+          .container { padding: 1rem; }
+          .card-header { padding: 2rem 1.5rem 0; }
+          .form-body { padding: 1.5rem; }
+          .tab-container { margin: 1.5rem 1.5rem 0; }
+          .card-footer { padding: 1rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="grid-lines"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="container">
+    <div class="auth-card">
+        <div class="card-header">
+            <div class="logo-circle">📖</div>
+            <div class="app-name">LughatPro</div>
+            <div class="app-tagline">Professional English ↔ Urdu Dictionary</div>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+            <button class="tab-btn" onclick="switchTab('register')">Register</button>
+        </div>
+
+        <div class="form-body">
+
+            <!-- LOGIN FORM -->
+            <div id="loginForm">
+                <div id="loginAlert" class="alert alert-error"></div>
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="loginUsername" class="form-input" placeholder="Enter your username" autocomplete="username"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" autocomplete="current-password"/>
+                        <button class="toggle-pass" onclick="togglePass('loginPassword', this)">👁️</button>
+                    </div>
+                </div>
+                <button class="btn-submit" id="loginBtn" onclick="handleLogin()">
+                    Sign In to Dictionary
+                </button>
+                <div class="demo-creds">
+                    <div class="demo-title">⚡ Quick Demo Access</div>
+<!--                    <div class="demo-row">-->
+<!--                        <span class="demo-label">Admin:</span>-->
+<!--                        <span class="demo-val" onclick="fillLogin('admin','admin123')">admin / admin123</span>-->
+<!--                    </div>-->
+                    <div class="demo-row">
+                        <span class="demo-label">Member:</span>
+                        <span class="demo-val" onclick="fillLogin('member','member123')">member / member123</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div id="registerForm" style="display:none;">
+                <div id="regAlert" class="alert alert-error"></div>
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="regFullName" class="form-input" placeholder="Your full name"/>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" id="regUsername" class="form-input" placeholder="username"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="regEmail" class="form-input" placeholder="email@example.com"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" id="regPassword" class="form-input" placeholder="Choose a strong password"/>
+                        <button class="toggle-pass" onclick="togglePass('regPassword', this)">👁️</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Account Type</label>
+                    <select id="regRole" class="form-select">
+                        <option value="ROLE_MEMBER">Member (Read-only access)</option>
+<!--                        <option value="ROLE_ADMIN">Admin (Full access)</option>-->
+                    </select>
+                </div>
+                <button class="btn-submit" id="regBtn" onclick="handleRegister()">
+                    Create Account
+                </button>
+            </div>
+
+        </div>
+
+        <div class="card-footer">
+            <span class="feature-badge">🔐 JWT Secured</span>
+            <span class="feature-badge">🌐 English ↔ Urdu</span>
+            <span class="feature-badge">📚 13 Subjects</span>
+            <span class="feature-badge">🔍 Smart Search</span>
+        </div>
+    </div>
+</div>
+
+<script>
+<!--    const API = 'http://localhost:8080/api';-->
+    fetch("/api/auth/login");
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach((b,i) => {
+        b.classList.toggle('active', (tab==='login' && i===0) || (tab==='register' && i===1));
+      });
+      document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+    }
+
+    function togglePass(id, btn) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+      else { input.type = 'password'; btn.textContent = '👁️'; }
+    }
+
+    function fillLogin(u, p) {
+      document.getElementById('loginUsername').value = u;
+      document.getElementById('loginPassword').value = p;
+    }
+
+    function showAlert(id, msg, isError = true) {
+      const el = document.getElementById(id);
+      el.textContent = (isError ? '⚠️ ' : '✅ ') + msg;
+      el.className = 'alert ' + (isError ? 'alert-error' : 'alert-success') + ' show';
+      setTimeout(() => el.classList.remove('show'), 5000);
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      btn.disabled = loading;
+      btn.innerHTML = loading
+        ? '<span class="spinner"></span> Please wait...'
+        : (btnId === 'loginBtn' ? 'Sign In to Dictionary' : 'Create Account');
+    }
+
+    async function handleLogin() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      if (!username || !password) { showAlert('loginAlert', 'Please fill in all fields.'); return; }
+      setLoading('loginBtn', true);
+      try {
+        const res = await fetch(`${API}/auth/login`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data));
+          showAlert('loginAlert', 'Login successful! Redirecting...', false);
+          setTimeout(() => {
+            window.location.href = data.role === 'ROLE_ADMIN' ? 'admin.html' : 'member.html';
+          }, 800);
+        } else {
+          showAlert('loginAlert', data.message || 'Login failed. Check credentials.');
+        }
+      } catch (e) {
+        showAlert('loginAlert', 'You have been deactivated by the Admin');
+      }
+      setLoading('loginBtn', false);
+    }
+
+    async function handleRegister() {
+      const fullName = document.getElementById('regFullName').value.trim();
+      const username = document.getElementById('regUsername').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const role = document.getElementById('regRole').value;
+      if (!username || !email || !password) { showAlert('regAlert', 'Please fill all required fields.'); return; }
+      if (password.length < 6) { showAlert('regAlert', 'Password must be at least 6 characters.'); return; }
+      setLoading('regBtn', true);
+      try {
+        const res = await fetch(`${API}/auth/register`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ username, email, password, fullName, role })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showAlert('regAlert', 'Account created! You can now sign in.', false);
+          setTimeout(() => switchTab('login'), 1500);
+        } else {
+          showAlert('regAlert', data.message || 'Registration failed.');
+        }
+      } catch (e) {
+        showAlert('regAlert', 'Please enter a valid email address');
+      }
+      setLoading('regBtn', false);
+    }
+
+    // Enter key support
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const loginVisible = document.getElementById('loginForm').style.display !== 'none';
+        if (loginVisible) handleLogin(); else handleRegister();
+      }
+    });
+
+    // Auto-redirect if already logged in
+    const existingUser = localStorage.getItem('user');
+    if (existingUser) {
+      try {
+        const u = JSON.parse(existingUser);
+        if (u.token) {
+          window.location.href = u.role === 'ROLE_ADMIN' ? 'admin.html' : 'member.html';
+        }
+      } catch(e) { localStorage.clear(); }
+    }
+</script>
+</body>
+</html>

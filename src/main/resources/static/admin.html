@@ -1,0 +1,1809 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8"/>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+<!--    <title>LughatPro — Admin Dashboard</title>-->
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>-->
+<!--    <style>-->
+<!--        :root {-->
+<!--          &#45;&#45;gold:#c9a84c; &#45;&#45;gold-light:#e8c96e;-->
+<!--          &#45;&#45;dark:#0f0f14; &#45;&#45;dark2:#1a1a24; &#45;&#45;dark3:#252533;-->
+<!--          &#45;&#45;red:#ef4444; &#45;&#45;green:#22c55e; &#45;&#45;blue:#3b82f6; &#45;&#45;emerald:#2dd4bf;-->
+<!--          &#45;&#45;text:#e8e8f0; &#45;&#45;text-muted:#8b8b9a;-->
+<!--        }-->
+<!--        *{margin:0;padding:0;box-sizing:border-box;}-->
+<!--        body{font-family:'DM Sans',sans-serif;background:var(&#45;&#45;dark);color:var(&#45;&#45;text);min-height:100vh;}-->
+<!--        .urdu{font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif;direction:rtl;line-height:2;font-size:1.05em;}-->
+
+<!--        .sidebar{width:260px;height:100vh;position:fixed;left:0;top:0;z-index:100;-->
+<!--          background:linear-gradient(180deg,var(&#45;&#45;dark2) 0%,var(&#45;&#45;dark) 100%);-->
+<!--          border-right:1px solid rgba(201,168,76,0.12);display:flex;flex-direction:column;transition:transform 0.3s;}-->
+<!--        .sidebar-logo{padding:1.8rem 1.5rem 1.2rem;border-bottom:1px solid rgba(201,168,76,0.1);}-->
+<!--        .logo-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;-->
+<!--          background:linear-gradient(135deg,var(&#45;&#45;gold-light),var(&#45;&#45;gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}-->
+<!--        .logo-badge{display:inline-block;font-size:0.65rem;background:linear-gradient(135deg,var(&#45;&#45;gold),#b8952e);-->
+<!--          color:var(&#45;&#45;dark);padding:2px 8px;border-radius:20px;font-weight:700;letter-spacing:0.05em;margin-top:4px;}-->
+<!--        .nav-section{padding:1.5rem 1rem;flex:1;overflow-y:auto;}-->
+<!--        .nav-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(&#45;&#45;text-muted);-->
+<!--          font-weight:600;padding:0 0.5rem;margin-bottom:0.6rem;margin-top:1rem;}-->
+<!--        .nav-item{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.75rem;border-radius:10px;-->
+<!--          cursor:pointer;margin-bottom:0.2rem;color:var(&#45;&#45;text-muted);font-size:0.88rem;font-weight:500;transition:all 0.2s;}-->
+<!--        .nav-item:hover{background:rgba(201,168,76,0.08);color:var(&#45;&#45;text);}-->
+<!--        .nav-item.active{background:linear-gradient(135deg,rgba(201,168,76,0.18),rgba(201,168,76,0.06));-->
+<!--          color:var(&#45;&#45;gold-light);border-left:2px solid var(&#45;&#45;gold);}-->
+<!--        .nav-icon{font-size:1.1rem;width:20px;text-align:center;}-->
+<!--        .sidebar-user{padding:1.2rem 1.5rem;border-top:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;gap:0.75rem;}-->
+<!--        .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#b91c1c);-->
+<!--          display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:#fff;flex-shrink:0;}-->
+<!--        .user-name{font-size:0.88rem;font-weight:600;color:var(&#45;&#45;text);}-->
+<!--        .user-role{font-size:0.72rem;color:var(&#45;&#45;red);}-->
+<!--        .logout-btn{margin-left:auto;background:none;border:none;cursor:pointer;color:var(&#45;&#45;text-muted);font-size:1.2rem;transition:color 0.2s;}-->
+<!--        .logout-btn:hover{color:var(&#45;&#45;red);}-->
+
+<!--        .main{margin-left:260px;padding:2rem;min-height:100vh;}-->
+<!--        .page{display:none;}-->
+<!--        .page.active{display:block;}-->
+
+<!--        /* Stats */-->
+<!--        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}-->
+<!--        .stat-card{background:var(&#45;&#45;dark3);border-radius:16px;padding:1.5rem;border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden;}-->
+<!--        .stat-card::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 16px 0 60px;opacity:0.1;}-->
+<!--        .stat-card.gold::before{background:var(&#45;&#45;gold);}-->
+<!--        .stat-card.green::before{background:var(&#45;&#45;green);}-->
+<!--        .stat-card.blue::before{background:var(&#45;&#45;blue);}-->
+<!--        .stat-card.red::before{background:var(&#45;&#45;red);}-->
+<!--        .stat-icon{font-size:1.8rem;margin-bottom:0.8rem;}-->
+<!--        .stat-value{font-size:2rem;font-weight:800;line-height:1;}-->
+<!--        .stat-card.gold .stat-value{color:var(&#45;&#45;gold);}-->
+<!--        .stat-card.green .stat-value{color:var(&#45;&#45;green);}-->
+<!--        .stat-card.blue .stat-value{color:var(&#45;&#45;blue);}-->
+<!--        .stat-card.red .stat-value{color:var(&#45;&#45;red);}-->
+<!--        .stat-label{font-size:0.8rem;color:var(&#45;&#45;text-muted);margin-top:0.4rem;}-->
+
+<!--        /* Page header */-->
+<!--        .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}-->
+<!--        .page-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;}-->
+<!--        .page-title span{color:var(&#45;&#45;gold);}-->
+
+<!--        /* Buttons */-->
+<!--        .btn-primary{padding:0.7rem 1.4rem;background:linear-gradient(135deg,var(&#45;&#45;gold),#b8952e);-->
+<!--          border:none;border-radius:10px;color:var(&#45;&#45;dark);font-family:'DM Sans',sans-serif;-->
+<!--          font-weight:700;font-size:0.88rem;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}-->
+<!--        .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.3);}-->
+<!--        .btn-danger{padding:0.5rem 1rem;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);-->
+<!--          border-radius:8px;color:var(&#45;&#45;red);font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-weight:500;}-->
+<!--        .btn-danger:hover{background:rgba(239,68,68,0.2);}-->
+<!--        .btn-edit{padding:0.5rem 1rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);-->
+<!--          border-radius:8px;color:var(&#45;&#45;gold);font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-weight:500;}-->
+<!--        .btn-edit:hover{background:rgba(201,168,76,0.2);}-->
+<!--        .btn-secondary{padding:0.7rem 1.4rem;background:transparent;border:1px solid rgba(201,168,76,0.3);-->
+<!--          border-radius:10px;color:var(&#45;&#45;gold);font-family:'DM Sans',sans-serif;font-weight:600;-->
+<!--          font-size:0.88rem;cursor:pointer;transition:all 0.2s;}-->
+<!--        .btn-secondary:hover{background:rgba(201,168,76,0.1);}-->
+
+<!--        /* Search */-->
+<!--        .search-wrap{position:relative;max-width:400px;}-->
+<!--        .search-input{width:100%;padding:0.7rem 1rem 0.7rem 2.8rem;background:var(&#45;&#45;dark);-->
+<!--          border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:var(&#45;&#45;text);-->
+<!--          font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;transition:all 0.3s;}-->
+<!--        .search-input:focus{border-color:var(&#45;&#45;gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1);}-->
+<!--        .search-icon{position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);color:var(&#45;&#45;text-muted);}-->
+
+<!--        /* Table */-->
+<!--        .table-wrap{background:var(&#45;&#45;dark3);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;}-->
+<!--        .table-header{padding:1.2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);-->
+<!--          display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem;}-->
+<!--        table{width:100%;border-collapse:collapse;}-->
+<!--        thead th{padding:0.9rem 1.2rem;text-align:left;font-size:0.75rem;text-transform:uppercase;-->
+<!--          letter-spacing:0.08em;color:var(&#45;&#45;text-muted);font-weight:600;border-bottom:1px solid rgba(255,255,255,0.05);}-->
+<!--        tbody tr{border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.2s;}-->
+<!--        tbody tr:hover{background:rgba(201,168,76,0.03);}-->
+<!--        tbody td{padding:0.9rem 1.2rem;font-size:0.88rem;color:var(&#45;&#45;text);vertical-align:middle;}-->
+<!--        tbody tr:last-child{border-bottom:none;}-->
+
+<!--        /* Modal */-->
+<!--        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;-->
+<!--          display:flex;align-items:center;justify-content:center;padding:1rem;-->
+<!--          opacity:0;pointer-events:none;transition:opacity 0.3s;}-->
+<!--        .modal-overlay.open{opacity:1;pointer-events:all;}-->
+<!--        .modal{background:var(&#45;&#45;dark2);border:1px solid rgba(201,168,76,0.2);border-radius:20px;-->
+<!--          width:100%;max-width:600px;max-height:90vh;overflow-y:auto;-->
+<!--          transform:translateY(20px);transition:transform 0.3s;}-->
+<!--        .modal-overlay.open .modal{transform:translateY(0);}-->
+<!--        .modal-header{padding:1.5rem 1.8rem;border-bottom:1px solid rgba(255,255,255,0.06);-->
+<!--          display:flex;justify-content:space-between;align-items:center;}-->
+<!--        .modal-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(&#45;&#45;gold);}-->
+<!--        .modal-close{background:none;border:none;color:var(&#45;&#45;text-muted);font-size:1.5rem;cursor:pointer;}-->
+<!--        .modal-body{padding:1.8rem;}-->
+<!--        .form-group{margin-bottom:1.2rem;}-->
+<!--        .form-label{display:block;font-size:0.78rem;font-weight:600;letter-spacing:0.07em;-->
+<!--          text-transform:uppercase;color:var(&#45;&#45;text-muted);margin-bottom:0.5rem;}-->
+<!--        .form-input,.form-select,.form-textarea{width:100%;padding:0.75rem 1rem;-->
+<!--          background:rgba(15,15,20,0.7);border:1px solid rgba(201,168,76,0.15);-->
+<!--          border-radius:10px;color:var(&#45;&#45;text);font-family:'DM Sans',sans-serif;font-size:0.92rem;-->
+<!--          outline:none;transition:all 0.3s;}-->
+<!--        .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(&#45;&#45;gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1);}-->
+<!--        .form-textarea{resize:vertical;min-height:80px;}-->
+<!--        .form-select option{background:var(&#45;&#45;dark2);}-->
+<!--        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}-->
+
+<!--        /* Badge */-->
+<!--        .badge{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:20px;font-weight:600;}-->
+<!--        .badge-gold{background:rgba(201,168,76,0.12);color:var(&#45;&#45;gold);}-->
+<!--        .badge-green{background:rgba(34,197,94,0.12);color:var(&#45;&#45;green);}-->
+<!--        .badge-red{background:rgba(239,68,68,0.12);color:var(&#45;&#45;red);}-->
+<!--        .badge-blue{background:rgba(59,130,246,0.12);color:var(&#45;&#45;blue);}-->
+
+<!--        /* Upload zone */-->
+<!--        .upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:14px;padding:2.5rem;-->
+<!--          text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.02);}-->
+<!--        .upload-zone:hover{border-color:var(&#45;&#45;gold);background:rgba(201,168,76,0.06);}-->
+<!--        .upload-zone.dragover{border-color:var(&#45;&#45;gold);background:rgba(201,168,76,0.1);}-->
+
+<!--        /* Pagination */-->
+<!--        .pagination{display:flex;justify-content:center;align-items:center;gap:0.5rem;margin-top:1.5rem;flex-wrap:wrap;}-->
+<!--        .page-btn{padding:0.45rem 0.85rem;border-radius:8px;border:1px solid rgba(201,168,76,0.2);-->
+<!--          background:transparent;color:var(&#45;&#45;text-muted);cursor:pointer;font-size:0.85rem;transition:all 0.2s;}-->
+<!--        .page-btn:hover,.page-btn.active{background:var(&#45;&#45;gold);border-color:var(&#45;&#45;gold);color:var(&#45;&#45;dark);font-weight:600;}-->
+<!--        .page-btn:disabled{opacity:0.3;cursor:default;}-->
+
+<!--        /* Alert */-->
+<!--        .toast{position:fixed;top:1.5rem;right:1.5rem;padding:1rem 1.5rem;border-radius:12px;-->
+<!--          font-size:0.9rem;font-weight:500;z-index:1000;transform:translateX(120%);transition:transform 0.3s;}-->
+<!--        .toast.show{transform:translateX(0);}-->
+<!--        .toast-success{background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);color:#86efac;}-->
+<!--        .toast-error{background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#fca5a5;}-->
+
+<!--        /* Loading */-->
+<!--        .loading{display:flex;justify-content:center;padding:3rem;}-->
+<!--        .spinner{width:32px;height:32px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(&#45;&#45;gold);border-radius:50%;animation:spin 0.8s linear infinite;}-->
+<!--        @keyframes spin{to{transform:rotate(360deg);}}-->
+<!--        .empty-state{text-align:center;padding:4rem 2rem;color:var(&#45;&#45;text-muted);}-->
+
+<!--        /* Menu toggle */-->
+<!--        .menu-toggle{display:none;background:none;border:none;color:var(&#45;&#45;text);font-size:1.5rem;cursor:pointer;}-->
+<!--        .overlay-bg{display:none;}-->
+
+<!--        @media(max-width:768px){-->
+<!--          .sidebar{transform:translateX(-100%);}-->
+<!--          .sidebar.open{transform:translateX(0);}-->
+<!--          .main{margin-left:0;padding:1rem;}-->
+<!--          .menu-toggle{display:block;}-->
+<!--          .overlay-bg{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;opacity:0;pointer-events:none;transition:opacity 0.3s;}-->
+<!--          .overlay-bg.open{opacity:1;pointer-events:all;}-->
+<!--          .stats-grid{grid-template-columns:repeat(2,1fr);}-->
+<!--          .form-grid{grid-template-columns:1fr;}-->
+<!--          table{font-size:0.8rem;}-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="toast" id="toast"></div>-->
+
+<!--&lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--<aside class="sidebar" id="sidebar">-->
+<!--    <div class="sidebar-logo">-->
+<!--        <div class="logo-text">📖 LughatPro</div>-->
+<!--        <div><span class="logo-badge">ADMIN PANEL</span></div>-->
+<!--    </div>-->
+<!--    <nav class="nav-section">-->
+<!--        <div class="nav-label">Overview</div>-->
+<!--        <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard">-->
+<!--            <span class="nav-icon">📊</span> Dashboard-->
+<!--        </div>-->
+<!--        <div class="nav-label">Management</div>-->
+<!--        <div class="nav-item" onclick="showPage('subjects')" id="nav-subjects">-->
+<!--            <span class="nav-icon">📚</span> Subjects-->
+<!--        </div>-->
+<!--        <div class="nav-item" onclick="showPage('words')" id="nav-words">-->
+<!--            <span class="nav-icon">📝</span> Words-->
+<!--        </div>-->
+<!--        <div class="nav-item" onclick="showPage('upload')" id="nav-upload">-->
+<!--            <span class="nav-icon">📤</span> Bulk Upload-->
+<!--        </div>-->
+<!--        <div class="nav-item" onclick="showPage('users')" id="nav-users">-->
+<!--            <span class="nav-icon">👥</span> Users-->
+<!--        </div>-->
+<!--        <div class="nav-label">Tools</div>-->
+<!--        <div class="nav-item" onclick="exportAll()">-->
+<!--            <span class="nav-icon">⬇️</span> Export All Words-->
+<!--        </div>-->
+<!--        <div class="nav-item" onclick="downloadTemplate()">-->
+<!--            <span class="nav-icon">📋</span> Download Template-->
+<!--        </div>-->
+<!--    </nav>-->
+<!--    <div class="sidebar-user">-->
+<!--        <div class="user-avatar" id="userInitial">A</div>-->
+<!--        <div>-->
+<!--            <div class="user-name" id="sidebarUsername">Admin</div>-->
+<!--            <div class="user-role">Administrator</div>-->
+<!--        </div>-->
+<!--        <button class="logout-btn" onclick="logout()">⏏️</button>-->
+<!--    </div>-->
+<!--</aside>-->
+<!--<div class="overlay-bg" id="overlayBg" onclick="closeSidebar()"></div>-->
+
+<!--<main class="main">-->
+<!--    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">-->
+<!--        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>-->
+<!--        <span style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(&#45;&#45;gold);">LughatPro Admin</span>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; DASHBOARD &ndash;&gt;-->
+<!--    <div class="page active" id="page-dashboard">-->
+<!--        <div class="page-header">-->
+<!--            <div class="page-title">📊 <span>Dashboard</span></div>-->
+<!--        </div>-->
+<!--        <div class="stats-grid" id="statsGrid">-->
+<!--            <div class="stat-card gold"><div class="stat-icon">📚</div><div class="stat-value" id="statSubjects">—</div><div class="stat-label">Total Subjects</div></div>-->
+<!--            <div class="stat-card green"><div class="stat-icon">📝</div><div class="stat-value" id="statWords">—</div><div class="stat-label">Total Words</div></div>-->
+<!--            <div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value" id="statUsers">—</div><div class="stat-label">Total Users</div></div>-->
+<!--            <div class="stat-card red"><div class="stat-icon">👑</div><div class="stat-value" id="statAdmins">—</div><div class="stat-label">Admins</div></div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Subject breakdown &ndash;&gt;-->
+<!--        <div class="table-wrap">-->
+<!--            <div class="table-header">-->
+<!--                <div style="font-size:1rem;font-weight:700;">📚 Subject Overview</div>-->
+<!--                <button class="btn-primary" onclick="showPage('subjects')">Manage Subjects</button>-->
+<!--            </div>-->
+<!--            <div style="overflow-x:auto;">-->
+<!--                <table>-->
+<!--                    <thead><tr><th>Icon</th><th>Subject</th><th>Words</th><th>Description</th><th>Actions</th></tr></thead>-->
+<!--                    <tbody id="dashSubjectsTable"><tr><td colspan="5"><div class="loading"><div class="spinner"></div></div></td></tr></tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; SUBJECTS &ndash;&gt;-->
+<!--    <div class="page" id="page-subjects">-->
+<!--        <div class="page-header">-->
+<!--            <div class="page-title">📚 <span>Subjects</span></div>-->
+<!--            <button class="btn-primary" onclick="openSubjectModal()">+ Add Subject</button>-->
+<!--        </div>-->
+<!--        <div class="table-wrap">-->
+<!--            <div class="table-header">-->
+<!--                <div class="search-wrap">-->
+<!--                    <span class="search-icon">🔍</span>-->
+<!--                    <input type="text" class="search-input" id="subjectSearch" placeholder="Search subjects..." oninput="filterSubjects()"/>-->
+<!--                </div>-->
+<!--                <span style="font-size:0.85rem;color:var(&#45;&#45;text-muted);" id="subjectCount"></span>-->
+<!--            </div>-->
+<!--            <div style="overflow-x:auto;">-->
+<!--                <table>-->
+<!--                    <thead><tr><th>Icon</th><th>Name</th><th>Color</th><th>Words</th><th>Description</th><th>Actions</th></tr></thead>-->
+<!--                    <tbody id="subjectsTableBody"></tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; WORDS &ndash;&gt;-->
+<!--    <div class="page" id="page-words">-->
+<!--        <div class="page-header">-->
+<!--            <div class="page-title">📝 <span>Words</span></div>-->
+<!--            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">-->
+<!--                <select class="form-select" id="filterSubjectSelect" onchange="loadWords()" style="max-width:200px;padding:0.6rem 1rem;">-->
+<!--                    <option value="">All Subjects</option>-->
+<!--                </select>-->
+<!--                <button class="btn-primary" onclick="openWordModal()">+ Add Word</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="table-wrap">-->
+<!--            <div class="table-header">-->
+<!--                <div class="search-wrap">-->
+<!--                    <span class="search-icon">🔍</span>-->
+<!--                    <input type="text" class="search-input" id="wordSearch" placeholder="Search words..." oninput="debounceWordSearch()"/>-->
+<!--                </div>-->
+<!--                <span style="font-size:0.85rem;color:var(&#45;&#45;text-muted);" id="wordCount"></span>-->
+<!--            </div>-->
+<!--            <div style="overflow-x:auto;">-->
+<!--                <table>-->
+<!--                    <thead><tr><th>English Word</th><th>Urdu Meaning</th><th>Part of Speech</th><th>Subject</th><th>Actions</th></tr></thead>-->
+<!--                    <tbody id="wordsTableBody"></tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--            <div class="pagination" id="wordsPagination"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; BULK UPLOAD &ndash;&gt;-->
+<!--    <div class="page" id="page-upload">-->
+<!--        <div class="page-header">-->
+<!--            <div class="page-title">📤 <span>Bulk Upload</span></div>-->
+<!--            <button class="btn-secondary" onclick="downloadTemplate()">⬇️ Download Template</button>-->
+<!--        </div>-->
+<!--        <div style="max-width:640px;">-->
+<!--            <div style="background:var(&#45;&#45;dark3);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:2rem;margin-bottom:1.5rem;">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Select Subject</label>-->
+<!--                    <select class="form-select" id="uploadSubjectSelect"><option value="">Select a subject...</option></select>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Upload File (.xlsx, .xls, .csv)</label>-->
+<!--                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('uploadFile').click()">-->
+<!--                        <div style="font-size:2.5rem;margin-bottom:0.8rem;">📂</div>-->
+<!--                        <div style="font-size:0.95rem;font-weight:600;color:var(&#45;&#45;text);">Drop file here or click to browse</div>-->
+<!--                        <div style="font-size:0.8rem;color:var(&#45;&#45;text-muted);margin-top:0.4rem;">Supports .xlsx, .xls, .csv (Max 10MB)</div>-->
+<!--                        <div id="uploadFileName" style="margin-top:0.8rem;font-size:0.85rem;color:var(&#45;&#45;gold);"></div>-->
+<!--                    </div>-->
+<!--                    <input type="file" id="uploadFile" accept=".xlsx,.xls,.csv" style="display:none;" onchange="onFileSelected()"/>-->
+<!--                </div>-->
+<!--                <button class="btn-primary" onclick="doUpload()" style="width:100%;justify-content:center;">📤 Upload Words</button>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; Template info &ndash;&gt;-->
+<!--            <div style="background:var(&#45;&#45;dark3);border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:1.5rem;">-->
+<!--                <div style="font-size:0.9rem;font-weight:700;color:var(&#45;&#45;blue);margin-bottom:0.8rem;">📋 Expected Column Format</div>-->
+<!--                <div style="overflow-x:auto;">-->
+<!--                    <table style="font-size:0.78rem;">-->
+<!--                        <thead><tr style="background:rgba(255,255,255,0.03);">-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col A</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col B</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col C</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col D</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col E</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col F</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col G</th>-->
+<!--                            <th style="padding:0.5rem;text-align:left;color:var(&#45;&#45;text-muted);">Col H</th>-->
+<!--                        </tr></thead>-->
+<!--                        <tbody><tr><td style="padding:0.5rem;color:var(&#45;&#45;text);">English Word*</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">Urdu Meaning</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">English Meaning</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">Example</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">Part of Speech</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">Pronunciation</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">Synonyms</td><td style="padding:0.5rem;color:var(&#45;&#45;text);">Antonyms</td></tr></tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--                <div style="font-size:0.75rem;color:var(&#45;&#45;text-muted);margin-top:0.8rem;">* Row 1 is treated as the header and skipped. English Word is required.</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; USERS &ndash;&gt;-->
+<!--    <div class="page" id="page-users">-->
+<!--        <div class="page-header">-->
+<!--            <div class="page-title">👥 <span>Users</span></div>-->
+<!--            <button class="btn-primary" onclick="openUserModal()">+ Add User</button>-->
+<!--        </div>-->
+<!--        <div class="table-wrap">-->
+<!--            <div class="table-header">-->
+<!--                <div style="font-size:1rem;font-weight:700;">Registered Users</div>-->
+<!--                <span style="font-size:0.85rem;color:var(&#45;&#45;text-muted);" id="usersCount"></span>-->
+<!--            </div>-->
+<!--            <div style="overflow-x:auto;">-->
+<!--                <table>-->
+<!--                    <thead><tr><th>Username</th><th>Full Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>-->
+<!--                    <tbody id="usersTableBody"></tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</main>-->
+
+<!--&lt;!&ndash; Subject Modal &ndash;&gt;-->
+<!--<div class="modal-overlay" id="subjectModal" onclick="closeModalOutside(event,'subjectModal')">-->
+<!--    <div class="modal">-->
+<!--        <div class="modal-header">-->
+<!--            <div class="modal-title" id="subjectModalTitle">Add Subject</div>-->
+<!--            <button class="modal-close" onclick="closeModal('subjectModal')">✕</button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <input type="hidden" id="editSubjectId"/>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Subject Name *</label>-->
+<!--                <input type="text" class="form-input" id="subjName" placeholder="e.g. Biology"/>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Description</label>-->
+<!--                <textarea class="form-textarea" id="subjDesc" placeholder="Brief description of the subject..."></textarea>-->
+<!--            </div>-->
+<!--            <div class="form-grid">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Icon (Emoji)</label>-->
+<!--                    <input type="text" class="form-input" id="subjIcon" placeholder="🧬"/>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Color (Hex)</label>-->
+<!--                    <input type="color" class="form-input" id="subjColor" value="#c9a84c" style="height:44px;padding:4px;cursor:pointer;"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button class="btn-primary" onclick="saveSubject()" style="width:100%;justify-content:center;">💾 Save Subject</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Word Modal &ndash;&gt;-->
+<!--<div class="modal-overlay" id="wordModal" onclick="closeModalOutside(event,'wordModal')">-->
+<!--    <div class="modal">-->
+<!--        <div class="modal-header">-->
+<!--            <div class="modal-title" id="wordModalTitle">Add Word</div>-->
+<!--            <button class="modal-close" onclick="closeModal('wordModal')">✕</button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <input type="hidden" id="editWordId"/>-->
+<!--            <div class="form-grid">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">English Word *</label>-->
+<!--                    <input type="text" class="form-input" id="wEngWord" placeholder="e.g. Photosynthesis"/>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Subject *</label>-->
+<!--                    <select class="form-select" id="wSubject"><option value="">Select subject...</option></select>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Urdu Meaning (اردو معنی)</label>-->
+<!--                <input type="text" class="form-input urdu" id="wUrduMeaning" placeholder="اردو میں معنی لکھیں" dir="rtl" lang="ur"/>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">English Meaning</label>-->
+<!--                <textarea class="form-textarea" id="wEngMeaning" placeholder="Definition in English..."></textarea>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Example Sentence</label>-->
+<!--                <textarea class="form-textarea" id="wExample" placeholder="Use in a sentence..."></textarea>-->
+<!--            </div>-->
+<!--            <div class="form-grid">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Part of Speech</label>-->
+<!--                    <select class="form-select" id="wPos">-->
+<!--                        <option value="">Select...</option>-->
+<!--                        <option>Noun</option><option>Verb</option><option>Adjective</option>-->
+<!--                        <option>Adverb</option><option>Pronoun</option><option>Preposition</option>-->
+<!--                        <option>Conjunction</option><option>Interjection</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Pronunciation</label>-->
+<!--                    <input type="text" class="form-input" id="wPronun" placeholder="e.g. /ˌfəʊtəʊˈsɪnθɪsɪs/"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-grid">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Synonyms</label>-->
+<!--                    <input type="text" class="form-input" id="wSynonyms" placeholder="comma, separated"/>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Antonyms</label>-->
+<!--                    <input type="text" class="form-input" id="wAntonyms" placeholder="comma, separated"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button class="btn-primary" onclick="saveWord()" style="width:100%;justify-content:center;">💾 Save Word</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; User Modal &ndash;&gt;-->
+<!--<div class="modal-overlay" id="userModal" onclick="closeModalOutside(event,'userModal')">-->
+<!--    <div class="modal">-->
+<!--        <div class="modal-header">-->
+<!--            <div class="modal-title">Add New User</div>-->
+<!--            <button class="modal-close" onclick="closeModal('userModal')">✕</button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Full Name</label>-->
+<!--                <input type="text" class="form-input" id="uFullName" placeholder="Full name"/>-->
+<!--            </div>-->
+<!--            <div class="form-grid">-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Username *</label>-->
+<!--                    <input type="text" class="form-input" id="uUsername" placeholder="username"/>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label class="form-label">Email *</label>-->
+<!--                    <input type="email" class="form-input" id="uEmail" placeholder="email@example.com"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Password *</label>-->
+<!--                <input type="password" class="form-input" id="uPassword" placeholder="Min 6 characters"/>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="form-label">Role</label>-->
+<!--                <select class="form-select" id="uRole">-->
+<!--                    <option value="ROLE_MEMBER">Member</option>-->
+<!--                    <option value="ROLE_ADMIN">Admin</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <button class="btn-primary" onclick="saveUser()" style="width:100%;justify-content:center;">💾 Create User</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const API = 'http://localhost:8080/api';-->
+<!--    let authToken = '';-->
+<!--    let subjects = [];-->
+<!--    let users = [];-->
+<!--    let wordPage = 0;-->
+<!--    let wordSearchTimer;-->
+<!--    let wordSearchKw = '';-->
+<!--    let wordFilterSubject = '';-->
+
+<!--    // Auth-->
+<!--    const userStr = localStorage.getItem('user');-->
+<!--    if (!userStr) { window.location.href = 'index.html'; }-->
+<!--    const user = JSON.parse(userStr);-->
+<!--    authToken = user.token;-->
+<!--    if (user.role !== 'ROLE_ADMIN') { window.location.href = 'member.html'; }-->
+<!--    document.getElementById('userInitial').textContent = (user.username||'A')[0].toUpperCase();-->
+<!--    document.getElementById('sidebarUsername').textContent = user.fullName || user.username;-->
+
+<!--    const H = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` });-->
+
+<!--    function showToast(msg, isError=false) {-->
+<!--      const t = document.getElementById('toast');-->
+<!--      t.textContent = (isError ? '❌ ' : '✅ ') + msg;-->
+<!--      t.className = 'toast ' + (isError ? 'toast-error' : 'toast-success') + ' show';-->
+<!--      setTimeout(() => t.classList.remove('show'), 3000);-->
+<!--    }-->
+
+<!--    function showPage(name) {-->
+<!--      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));-->
+<!--      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));-->
+<!--      document.getElementById('page-' + name).classList.add('active');-->
+<!--      const nav = document.getElementById('nav-' + name);-->
+<!--      if (nav) nav.classList.add('active');-->
+<!--      closeSidebar();-->
+<!--      if (name === 'dashboard') loadDashboard();-->
+<!--      if (name === 'subjects') loadSubjectsPage();-->
+<!--      if (name === 'words') loadWords();-->
+<!--      if (name === 'users') loadUsers();-->
+<!--      if (name === 'upload') loadUploadSubjects();-->
+<!--    }-->
+
+<!--    // ======= LOAD DATA =======-->
+<!--    async function loadSubjectsData() {-->
+<!--      const res = await fetch(`${API}/subjects`, { headers: H() });-->
+<!--      subjects = await res.json();-->
+<!--      return subjects;-->
+<!--    }-->
+
+<!--    async function loadDashboard() {-->
+<!--      await loadSubjectsData();-->
+<!--      // Stats-->
+<!--      document.getElementById('statSubjects').textContent = subjects.length;-->
+<!--      fetch(`${API}/words/stats`, { headers: H() }).then(r=>r.json()).then(d => {-->
+<!--        document.getElementById('statWords').textContent = (d.totalWords||0).toLocaleString();-->
+<!--      });-->
+<!--      fetch(`${API}/users`, { headers: H() }).then(r=>r.json()).then(u => {-->
+<!--        users = u;-->
+<!--        document.getElementById('statUsers').textContent = u.length;-->
+<!--        document.getElementById('statAdmins').textContent = u.filter(x=>x.role==='ROLE_ADMIN').length;-->
+<!--      });-->
+<!--      // Subject table-->
+<!--      const tbody = document.getElementById('dashSubjectsTable');-->
+<!--      tbody.innerHTML = subjects.map(s => `-->
+<!--        <tr>-->
+<!--          <td style="font-size:1.5rem;">${s.icon||'📚'}</td>-->
+<!--          <td><strong>${escHtml(s.name)}</strong></td>-->
+<!--          <td><span class="badge badge-gold">${s.wordCount||0}</span></td>-->
+<!--          <td style="color:var(&#45;&#45;text-muted);font-size:0.82rem;">${escHtml(s.description||'')}</td>-->
+<!--          <td>-->
+<!--            <button class="btn-edit" onclick="editSubjectFromDash(${s.id})">Edit</button>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      `).join('');-->
+<!--    }-->
+
+<!--    async function loadSubjectsPage() {-->
+<!--      await loadSubjectsData();-->
+<!--      document.getElementById('subjectCount').textContent = subjects.length + ' subjects';-->
+<!--      renderSubjectsTable(subjects);-->
+<!--    }-->
+
+<!--    function renderSubjectsTable(data) {-->
+<!--      document.getElementById('subjectsTableBody').innerHTML = data.map(s => `-->
+<!--        <tr>-->
+<!--          <td style="font-size:1.5rem;">${s.icon||'📚'}</td>-->
+<!--          <td><strong>${escHtml(s.name)}</strong></td>-->
+<!--          <td><span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${s.color||'#c9a84c'};"></span></td>-->
+<!--          <td><span class="badge badge-gold">${s.wordCount||0}</span></td>-->
+<!--          <td style="color:var(&#45;&#45;text-muted);font-size:0.82rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(s.description||'')}</td>-->
+<!--          <td>-->
+<!--            <div style="display:flex;gap:0.4rem;">-->
+<!--              <button class="btn-edit" onclick="editSubject(${s.id})">✏️ Edit</button>-->
+<!--              <button class="btn-danger" onclick="deleteSubject(${s.id},'${escHtml(s.name)}')">🗑️</button>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      `).join('') || '<tr><td colspan="6"><div class="empty-state">No subjects found</div></td></tr>';-->
+<!--    }-->
+
+<!--    function filterSubjects() {-->
+<!--      const kw = document.getElementById('subjectSearch').value.toLowerCase();-->
+<!--      renderSubjectsTable(subjects.filter(s => s.name.toLowerCase().includes(kw)));-->
+<!--    }-->
+
+<!--    // ======= WORDS =======-->
+<!--    async function loadWords() {-->
+<!--      await loadSubjectsData();-->
+<!--      // Populate subject filter-->
+<!--      const sel = document.getElementById('filterSubjectSelect');-->
+<!--      sel.innerHTML = '<option value="">All Subjects</option>' + subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');-->
+<!--      await fetchWords();-->
+<!--    }-->
+
+<!--    async function fetchWords() {-->
+<!--      const tbody = document.getElementById('wordsTableBody');-->
+<!--      tbody.innerHTML = '<tr><td colspan="5"><div class="loading"><div class="spinner"></div></div></td></tr>';-->
+<!--      wordFilterSubject = document.getElementById('filterSubjectSelect').value;-->
+<!--      let url;-->
+<!--      if (wordSearchKw) {-->
+<!--        url = `${API}/words/global-search?keyword=${encodeURIComponent(wordSearchKw)}&page=${wordPage}&size=25`;-->
+<!--      } else if (wordFilterSubject) {-->
+<!--        url = `${API}/words/subject/${wordFilterSubject}?page=${wordPage}&size=25`;-->
+<!--      } else {-->
+<!--        url = `${API}/words/global-search?keyword=&page=${wordPage}&size=25`;-->
+<!--        // fallback to first subject or all via global search with empty keyword — need non-empty, use space-->
+<!--        url = `${API}/words/subject/${subjects[0]?.id||1}?page=0&size=1`;-->
+<!--        // Actually get all words via all subjects - load from subject 0 or use empty search-->
+<!--        // Use subject filter if set, else global empty search won't work well-->
+<!--        // We'll load words for all subjects by concatenating — but backend provides pagination per subject-->
+<!--        // Better: always use global search with a broad term or use a dedicated endpoint-->
+<!--        // For simplicity, load first subject if no filter-->
+<!--        url = wordFilterSubject-->
+<!--          ? `${API}/words/subject/${wordFilterSubject}?page=${wordPage}&size=25`-->
+<!--          : `${API}/words/global-search?keyword=a&page=${wordPage}&size=25`;-->
+<!--      }-->
+<!--      try {-->
+<!--        const res = await fetch(url, { headers: H() });-->
+<!--        const data = await res.json();-->
+<!--        document.getElementById('wordCount').textContent = `${data.totalItems||0} words`;-->
+<!--        tbody.innerHTML = (data.content||[]).map(w => `-->
+<!--          <tr>-->
+<!--            <td><strong>${escHtml(w.englishWord)}</strong>${w.pronunciation?`<div style="font-size:0.72rem;color:var(&#45;&#45;text-muted);">${escHtml(w.pronunciation)}</div>`:''}</td>-->
+<!--            <td class="urdu" style="font-size:1rem;">${escHtml(w.urduMeaning||'—')}</td>-->
+<!--            <td>${w.partOfSpeech?`<span class="badge badge-blue">${escHtml(w.partOfSpeech)}</span>`:'—'}</td>-->
+<!--            <td><span class="badge badge-gold">${escHtml(w.subjectName||'—')}</span></td>-->
+<!--            <td>-->
+<!--              <div style="display:flex;gap:0.4rem;">-->
+<!--                <button class="btn-edit" onclick='editWord(${JSON.stringify(w).replace(/'/g,"&#39;")})'>✏️</button>-->
+<!--                <button class="btn-danger" onclick="deleteWord(${w.id},'${escHtml(w.englishWord)}')">🗑️</button>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        `).join('') || '<tr><td colspan="5"><div class="empty-state">No words found</div></td></tr>';-->
+<!--        renderWordsPagination(data);-->
+<!--      } catch(e) { tbody.innerHTML='<tr><td colspan="5"><div class="empty-state">Error loading words</div></td></tr>'; }-->
+<!--    }-->
+
+<!--    function debounceWordSearch() {-->
+<!--      clearTimeout(wordSearchTimer);-->
+<!--      wordSearchTimer = setTimeout(() => {-->
+<!--        wordSearchKw = document.getElementById('wordSearch').value.trim();-->
+<!--        wordPage = 0;-->
+<!--        fetchWords();-->
+<!--      }, 400);-->
+<!--    }-->
+
+<!--    function renderWordsPagination(data) {-->
+<!--      const cont = document.getElementById('wordsPagination');-->
+<!--      if (!data.totalPages || data.totalPages <= 1) { cont.innerHTML=''; return; }-->
+<!--      let html = `<button class="page-btn" ${wordPage===0?'disabled':''} onclick="changeWordPage(${wordPage-1})">‹</button>`;-->
+<!--      for (let i=0; i<Math.min(data.totalPages,7); i++) {-->
+<!--        html += `<button class="page-btn ${i===wordPage?'active':''}" onclick="changeWordPage(${i})">${i+1}</button>`;-->
+<!--      }-->
+<!--      if (data.totalPages > 7) html += `<span style="color:var(&#45;&#45;text-muted)">…${data.totalPages}</span>`;-->
+<!--      html += `<button class="page-btn" ${wordPage===data.totalPages-1?'disabled':''} onclick="changeWordPage(${wordPage+1})">›</button>`;-->
+<!--      cont.innerHTML = html;-->
+<!--    }-->
+
+<!--    function changeWordPage(p) { wordPage = p; fetchWords(); }-->
+
+<!--    // ======= USERS =======-->
+<!--    async function loadUsers() {-->
+<!--      const tbody = document.getElementById('usersTableBody');-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/users`, { headers: H() });-->
+<!--        users = await res.json();-->
+<!--        document.getElementById('usersCount').textContent = users.length + ' users';-->
+<!--        tbody.innerHTML = users.map(u => `-->
+<!--          <tr>-->
+<!--            <td><strong>${escHtml(u.username)}</strong></td>-->
+<!--            <td>${escHtml(u.fullName||'—')}</td>-->
+<!--            <td style="color:var(&#45;&#45;text-muted);font-size:0.85rem;">${escHtml(u.email||'')}</td>-->
+<!--            <td>${u.role==='ROLE_ADMIN'?'<span class="badge badge-red">Admin</span>':'<span class="badge badge-green">Member</span>'}</td>-->
+<!--            <td>${u.active?'<span class="badge badge-green">Active</span>':'<span class="badge badge-red">Inactive</span>'}</td>-->
+<!--            <td>-->
+<!--              <div style="display:flex;gap:0.4rem;">-->
+<!--                <button class="btn-edit" onclick="toggleUserActive(${u.id})">${u.active?'Deactivate':'Activate'}</button>-->
+<!--                <button class="btn-danger" onclick="deleteUser(${u.id},'${escHtml(u.username)}')">🗑️</button>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        `).join('') || '<tr><td colspan="6"><div class="empty-state">No users found</div></td></tr>';-->
+<!--      } catch(e) { tbody.innerHTML='<tr><td colspan="6"><div class="empty-state">Error loading users</div></td></tr>'; }-->
+<!--    }-->
+
+<!--    // ======= UPLOAD =======-->
+<!--    async function loadUploadSubjects() {-->
+<!--      await loadSubjectsData();-->
+<!--      const sel = document.getElementById('uploadSubjectSelect');-->
+<!--      sel.innerHTML = '<option value="">Select a subject...</option>' + subjects.map(s => `<option value="${s.id}">${s.icon||''} ${s.name}</option>`).join('');-->
+<!--    }-->
+
+<!--    function onFileSelected() {-->
+<!--      const file = document.getElementById('uploadFile').files[0];-->
+<!--      document.getElementById('uploadFileName').textContent = file ? '📎 ' + file.name : '';-->
+<!--    }-->
+
+<!--    async function doUpload() {-->
+<!--      const subjectId = document.getElementById('uploadSubjectSelect').value;-->
+<!--      const file = document.getElementById('uploadFile').files[0];-->
+<!--      if (!subjectId) { showToast('Please select a subject', true); return; }-->
+<!--      if (!file) { showToast('Please select a file', true); return; }-->
+<!--      const formData = new FormData();-->
+<!--      formData.append('file', file);-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/words/bulk-upload/${subjectId}`, {-->
+<!--          method:'POST', headers:{'Authorization':`Bearer ${authToken}`}, body:formData-->
+<!--        });-->
+<!--        const data = await res.json();-->
+<!--        if (res.ok) { showToast(data.message); document.getElementById('uploadFile').value=''; document.getElementById('uploadFileName').textContent=''; }-->
+<!--        else showToast(data.message||'Upload failed', true);-->
+<!--      } catch(e) { showToast('Upload failed: ' + e.message, true); }-->
+<!--    }-->
+
+<!--    async function downloadTemplate() {-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/words/template`, { headers: H() });-->
+<!--        if (!res.ok) throw new Error();-->
+<!--        const blob = await res.blob();-->
+<!--        const url = URL.createObjectURL(blob);-->
+<!--        const a = document.createElement('a'); a.href=url; a.download='words_template.xlsx'; a.click();-->
+<!--        URL.revokeObjectURL(url);-->
+<!--      } catch(e) { showToast('Failed to download template', true); }-->
+<!--    }-->
+
+<!--    async function exportAll() {-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/words/export`, { headers: H() });-->
+<!--        if (!res.ok) throw new Error();-->
+<!--        const blob = await res.blob();-->
+<!--        const url = URL.createObjectURL(blob);-->
+<!--        const a = document.createElement('a'); a.href=url; a.download='all_words.xlsx'; a.click();-->
+<!--        URL.revokeObjectURL(url);-->
+<!--        showToast('Export started!');-->
+<!--      } catch(e) { showToast('Export failed', true); }-->
+<!--    }-->
+
+<!--    // ======= SUBJECT CRUD =======-->
+<!--    function openSubjectModal(data=null) {-->
+<!--      document.getElementById('subjectModalTitle').textContent = data ? 'Edit Subject' : 'Add Subject';-->
+<!--      document.getElementById('editSubjectId').value = data?.id || '';-->
+<!--      document.getElementById('subjName').value = data?.name || '';-->
+<!--      document.getElementById('subjDesc').value = data?.description || '';-->
+<!--      document.getElementById('subjIcon').value = data?.icon || '';-->
+<!--      document.getElementById('subjColor').value = data?.color || '#c9a84c';-->
+<!--      openModal('subjectModal');-->
+<!--    }-->
+
+<!--    function editSubject(id) { openSubjectModal(subjects.find(s=>s.id===id)); }-->
+<!--    function editSubjectFromDash(id) { openSubjectModal(subjects.find(s=>s.id===id)); showPage('subjects'); }-->
+
+<!--    async function saveSubject() {-->
+<!--      const id = document.getElementById('editSubjectId').value;-->
+<!--      const body = {-->
+<!--        name: document.getElementById('subjName').value.trim(),-->
+<!--        description: document.getElementById('subjDesc').value.trim(),-->
+<!--        icon: document.getElementById('subjIcon').value.trim(),-->
+<!--        color: document.getElementById('subjColor').value-->
+<!--      };-->
+<!--      if (!body.name) { showToast('Subject name is required', true); return; }-->
+<!--      try {-->
+<!--        const url = id ? `${API}/subjects/${id}` : `${API}/subjects`;-->
+<!--        const method = id ? 'PUT' : 'POST';-->
+<!--        const res = await fetch(url, { method, headers: H(), body: JSON.stringify(body) });-->
+<!--        if (res.ok) {-->
+<!--          showToast(id ? 'Subject updated!' : 'Subject created!');-->
+<!--          closeModal('subjectModal');-->
+<!--          loadSubjectsPage();-->
+<!--        } else showToast('Failed to save subject', true);-->
+<!--      } catch(e) { showToast('Error: ' + e.message, true); }-->
+<!--    }-->
+
+<!--    async function deleteSubject(id, name) {-->
+<!--      if (!confirm(`Delete subject "${name}"? All words in it will also be deleted!`)) return;-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/subjects/${id}`, { method:'DELETE', headers: H() });-->
+<!--        if (res.ok) { showToast('Subject deleted!'); loadSubjectsPage(); }-->
+<!--        else showToast('Failed to delete subject', true);-->
+<!--      } catch(e) { showToast('Error', true); }-->
+<!--    }-->
+
+<!--    // ======= WORD CRUD =======-->
+<!--    function populateWordSubjects(selectedId=null) {-->
+<!--      const sel = document.getElementById('wSubject');-->
+<!--      sel.innerHTML = '<option value="">Select subject...</option>' + subjects.map(s =>-->
+<!--        `<option value="${s.id}" ${s.id==selectedId?'selected':''}>${s.name}</option>`-->
+<!--      ).join('');-->
+<!--    }-->
+
+<!--    function openWordModal(data=null) {-->
+<!--      document.getElementById('wordModalTitle').textContent = data ? 'Edit Word' : 'Add Word';-->
+<!--      document.getElementById('editWordId').value = data?.id || '';-->
+<!--      document.getElementById('wEngWord').value = data?.englishWord || '';-->
+<!--      document.getElementById('wUrduMeaning').value = data?.urduMeaning || '';-->
+<!--      document.getElementById('wEngMeaning').value = data?.englishMeaning || '';-->
+<!--      document.getElementById('wExample').value = data?.exampleSentence || '';-->
+<!--      document.getElementById('wPos').value = data?.partOfSpeech || '';-->
+<!--      document.getElementById('wPronun').value = data?.pronunciation || '';-->
+<!--      document.getElementById('wSynonyms').value = data?.synonyms || '';-->
+<!--      document.getElementById('wAntonyms').value = data?.antonyms || '';-->
+<!--      populateWordSubjects(data?.subjectId);-->
+<!--      openModal('wordModal');-->
+<!--    }-->
+
+<!--    function editWord(w) { openWordModal(w); }-->
+
+<!--    async function saveWord() {-->
+<!--      const id = document.getElementById('editWordId').value;-->
+<!--      const body = {-->
+<!--        englishWord: document.getElementById('wEngWord').value.trim(),-->
+<!--        urduMeaning: document.getElementById('wUrduMeaning').value.trim(),-->
+<!--        englishMeaning: document.getElementById('wEngMeaning').value.trim(),-->
+<!--        exampleSentence: document.getElementById('wExample').value.trim(),-->
+<!--        partOfSpeech: document.getElementById('wPos').value,-->
+<!--        pronunciation: document.getElementById('wPronun').value.trim(),-->
+<!--        synonyms: document.getElementById('wSynonyms').value.trim(),-->
+<!--        antonyms: document.getElementById('wAntonyms').value.trim(),-->
+<!--        subjectId: parseInt(document.getElementById('wSubject').value)-->
+<!--      };-->
+<!--      if (!body.englishWord || !body.subjectId) { showToast('English word and subject are required', true); return; }-->
+<!--      try {-->
+<!--        const url = id ? `${API}/words/${id}` : `${API}/words`;-->
+<!--        const method = id ? 'PUT' : 'POST';-->
+<!--        const res = await fetch(url, { method, headers: H(), body: JSON.stringify(body) });-->
+<!--        if (res.ok) {-->
+<!--          showToast(id ? 'Word updated!' : 'Word added!');-->
+<!--          closeModal('wordModal');-->
+<!--          fetchWords();-->
+<!--        } else showToast('Failed to save word', true);-->
+<!--      } catch(e) { showToast('Error: ' + e.message, true); }-->
+<!--    }-->
+
+<!--    async function deleteWord(id, name) {-->
+<!--      if (!confirm(`Delete word "${name}"?`)) return;-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/words/${id}`, { method:'DELETE', headers: H() });-->
+<!--        if (res.ok) { showToast('Word deleted!'); fetchWords(); }-->
+<!--        else showToast('Failed to delete word', true);-->
+<!--      } catch(e) { showToast('Error', true); }-->
+<!--    }-->
+
+<!--    // ======= USER CRUD =======-->
+<!--    function openUserModal() {-->
+<!--      ['uFullName','uUsername','uEmail','uPassword'].forEach(id => document.getElementById(id).value='');-->
+<!--      document.getElementById('uRole').value = 'ROLE_MEMBER';-->
+<!--      openModal('userModal');-->
+<!--    }-->
+
+<!--    async function saveUser() {-->
+<!--      const body = {-->
+<!--        fullName: document.getElementById('uFullName').value.trim(),-->
+<!--        username: document.getElementById('uUsername').value.trim(),-->
+<!--        email: document.getElementById('uEmail').value.trim(),-->
+<!--        password: document.getElementById('uPassword').value,-->
+<!--        role: document.getElementById('uRole').value-->
+<!--      };-->
+<!--      if (!body.username || !body.email || !body.password) { showToast('Fill all required fields', true); return; }-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/users`, { method:'POST', headers: H(), body: JSON.stringify(body) });-->
+<!--        const data = await res.json();-->
+<!--        if (res.ok) { showToast('User created!'); closeModal('userModal'); loadUsers(); }-->
+<!--        else showToast(data.message||'Failed to create user', true);-->
+<!--      } catch(e) { showToast('Error', true); }-->
+<!--    }-->
+
+<!--    async function toggleUserActive(id) {-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/users/${id}/toggle-active`, { method:'PUT', headers: H() });-->
+<!--        if (res.ok) { showToast('User status updated!'); loadUsers(); }-->
+<!--      } catch(e) {}-->
+<!--    }-->
+
+<!--    async function deleteUser(id, name) {-->
+<!--      if (!confirm(`Delete user "${name}"?`)) return;-->
+<!--      try {-->
+<!--        const res = await fetch(`${API}/users/${id}`, { method:'DELETE', headers: H() });-->
+<!--        if (res.ok) { showToast('User deleted!'); loadUsers(); }-->
+<!--      } catch(e) {}-->
+<!--    }-->
+
+<!--    // ======= UTILS =======-->
+<!--    function openModal(id) { document.getElementById(id).classList.add('open'); }-->
+<!--    function closeModal(id) { document.getElementById(id).classList.remove('open'); }-->
+<!--    function closeModalOutside(e, id) { if (e.target.id === id) closeModal(id); }-->
+<!--    function escHtml(str) { if(!str) return ''; const d=document.createElement('div'); d.appendChild(document.createTextNode(str)); return d.innerHTML; }-->
+<!--    function logout() { localStorage.clear(); window.location.href='index.html'; }-->
+<!--    function toggleSidebar() {-->
+<!--      document.getElementById('sidebar').classList.toggle('open');-->
+<!--      document.getElementById('overlayBg').classList.toggle('open');-->
+<!--    }-->
+<!--    function closeSidebar() {-->
+<!--      document.getElementById('sidebar').classList.remove('open');-->
+<!--      document.getElementById('overlayBg').classList.remove('open');-->
+<!--    }-->
+
+<!--    // Drag & drop on upload zone-->
+<!--    const uploadZone = document.getElementById('uploadZone');-->
+<!--    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });-->
+<!--    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));-->
+<!--    uploadZone.addEventListener('drop', e => {-->
+<!--      e.preventDefault(); uploadZone.classList.remove('dragover');-->
+<!--      const files = e.dataTransfer.files;-->
+<!--      if (files.length) {-->
+<!--        document.getElementById('uploadFile').files = files;-->
+<!--        onFileSelected();-->
+<!--      }-->
+<!--    });-->
+
+<!--    // Init-->
+<!--    loadDashboard();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>LughatPro — Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+        :root{--gold:#c9a84c;--gold-light:#e8c96e;--dark:#0f0f14;--dark2:#1a1a24;--dark3:#252533;--red:#ef4444;--green:#22c55e;--blue:#3b82f6;--emerald:#2dd4bf;--text:#e8e8f0;--text-muted:#8b8b9a;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;}
+        .urdu{font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif;direction:rtl;line-height:2;font-size:1.05em;}
+        .sidebar{width:260px;height:100vh;position:fixed;left:0;top:0;z-index:100;background:linear-gradient(180deg,var(--dark2) 0%,var(--dark) 100%);border-right:1px solid rgba(201,168,76,0.12);display:flex;flex-direction:column;transition:transform 0.3s;}
+        .sidebar-logo{padding:1.8rem 1.5rem 1.2rem;border-bottom:1px solid rgba(201,168,76,0.1);}
+        .logo-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .logo-badge{display:inline-block;font-size:0.65rem;background:linear-gradient(135deg,var(--gold),#b8952e);color:var(--dark);padding:2px 8px;border-radius:20px;font-weight:700;letter-spacing:0.05em;margin-top:4px;}
+        .nav-section{padding:1.5rem 1rem;flex:1;overflow-y:auto;}
+        .nav-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-weight:600;padding:0 0.5rem;margin-bottom:0.6rem;margin-top:1rem;}
+        .nav-item{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.75rem;border-radius:10px;cursor:pointer;margin-bottom:0.2rem;color:var(--text-muted);font-size:0.88rem;font-weight:500;transition:all 0.2s;}
+        .nav-item:hover{background:rgba(201,168,76,0.08);color:var(--text);}
+        .nav-item.active{background:linear-gradient(135deg,rgba(201,168,76,0.18),rgba(201,168,76,0.06));color:var(--gold-light);border-left:2px solid var(--gold);}
+        .nav-icon{font-size:1.1rem;width:20px;text-align:center;}
+        .sidebar-user{padding:1.2rem 1.5rem;border-top:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;gap:0.75rem;}
+        .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ef4444,#b91c1c);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:#fff;flex-shrink:0;}
+        .user-name{font-size:0.88rem;font-weight:600;color:var(--text);}
+        .user-role{font-size:0.72rem;color:var(--red);}
+        .logout-btn{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:1.2rem;transition:color 0.2s;}
+        .logout-btn:hover{color:var(--red);}
+        .main{margin-left:260px;padding:2rem;min-height:100vh;}
+        .page{display:none;}.page.active{display:block;}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
+        .stat-card{background:var(--dark3);border-radius:16px;padding:1.5rem;border:1px solid rgba(255,255,255,0.06);position:relative;overflow:hidden;}
+        .stat-card::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 16px 0 60px;opacity:0.1;}
+        .stat-card.gold::before{background:var(--gold);}.stat-card.green::before{background:var(--green);}.stat-card.blue::before{background:var(--blue);}.stat-card.red::before{background:var(--red);}
+        .stat-icon{font-size:1.8rem;margin-bottom:0.8rem;}
+        .stat-value{font-size:2rem;font-weight:800;line-height:1;}
+        .stat-card.gold .stat-value{color:var(--gold);}.stat-card.green .stat-value{color:var(--green);}.stat-card.blue .stat-value{color:var(--blue);}.stat-card.red .stat-value{color:var(--red);}
+        .stat-label{font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;}
+        .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+        .page-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;}.page-title span{color:var(--gold);}
+        .btn-primary{padding:0.7rem 1.4rem;background:linear-gradient(135deg,var(--gold),#b8952e);border:none;border-radius:10px;color:var(--dark);font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem;}
+        .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,168,76,0.3);}
+        .btn-danger{padding:0.5rem 0.85rem;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:var(--red);font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-weight:500;}
+        .btn-danger:hover{background:rgba(239,68,68,0.2);}
+        .btn-edit{padding:0.5rem 0.85rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:8px;color:var(--gold);font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-weight:500;}
+        .btn-edit:hover{background:rgba(201,168,76,0.2);}
+        .btn-secondary{padding:0.7rem 1.4rem;background:transparent;border:1px solid rgba(201,168,76,0.3);border-radius:10px;color:var(--gold);font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.88rem;cursor:pointer;transition:all 0.2s;}
+        .btn-secondary:hover{background:rgba(201,168,76,0.1);}
+        .search-row{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;}
+        .search-wrap{position:relative;flex:1;min-width:200px;max-width:360px;}
+        .search-input{width:100%;padding:0.7rem 1rem 0.7rem 2.8rem;background:var(--dark);border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;transition:all 0.3s;}
+        .search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1);}
+        .search-icon{position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);color:var(--text-muted);}
+        .filter-select{padding:0.68rem 1rem;background:var(--dark);border:1px solid rgba(201,168,76,0.2);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;cursor:pointer;transition:all 0.3s;min-width:180px;}
+        .filter-select:focus{border-color:var(--gold);}
+        .filter-select option{background:var(--dark2);}
+        .table-wrap{background:var(--dark3);border:1px solid rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;}
+        .table-header{padding:1.2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.8rem;}
+        table{width:100%;border-collapse:collapse;}
+        thead th{padding:0.9rem 1.2rem;text-align:left;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);font-weight:600;border-bottom:1px solid rgba(255,255,255,0.05);}
+        tbody tr{border-bottom:1px solid rgba(255,255,255,0.03);transition:background 0.2s;}
+        tbody tr:hover{background:rgba(201,168,76,0.03);}
+        tbody td{padding:0.9rem 1.2rem;font-size:0.88rem;color:var(--text);vertical-align:middle;}
+        tbody tr:last-child{border-bottom:none;}
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+        .modal-overlay.open{opacity:1;pointer-events:all;}
+        .modal{background:var(--dark2);border:1px solid rgba(201,168,76,0.2);border-radius:20px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;transform:translateY(20px);transition:transform 0.3s;}
+        .modal-overlay.open .modal{transform:translateY(0);}
+        .modal-header{padding:1.5rem 1.8rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;}
+        .modal-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+        .modal-close{background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;}
+        .modal-body{padding:1.8rem;}
+        .form-group{margin-bottom:1.2rem;}
+        .form-label{display:block;font-size:0.78rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem;}
+        .form-input,.form-select,.form-textarea{width:100%;padding:0.75rem 1rem;background:rgba(15,15,20,0.7);border:1px solid rgba(201,168,76,0.15);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.92rem;outline:none;transition:all 0.3s;}
+        .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.1);}
+        .form-textarea{resize:vertical;min-height:80px;}
+        .form-select option{background:var(--dark2);}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+        .badge{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:20px;font-weight:600;}
+        .badge-gold{background:rgba(201,168,76,0.12);color:var(--gold);}
+        .badge-green{background:rgba(34,197,94,0.12);color:var(--green);}
+        .badge-red{background:rgba(239,68,68,0.12);color:var(--red);}
+        .badge-blue{background:rgba(59,130,246,0.12);color:var(--blue);}
+        .upload-zone{border:2px dashed rgba(201,168,76,0.3);border-radius:14px;padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(201,168,76,0.02);}
+        .upload-zone:hover{border-color:var(--gold);background:rgba(201,168,76,0.06);}
+        .upload-zone.dragover{border-color:var(--gold);background:rgba(201,168,76,0.1);}
+        .pagination{display:flex;justify-content:center;align-items:center;gap:0.4rem;margin-top:1.5rem;flex-wrap:wrap;padding:1rem;}
+        .page-btn{padding:0.45rem 0.85rem;border-radius:8px;border:1px solid rgba(201,168,76,0.2);background:transparent;color:var(--text-muted);cursor:pointer;font-size:0.85rem;transition:all 0.2s;}
+        .page-btn:hover,.page-btn.active{background:var(--gold);border-color:var(--gold);color:var(--dark);font-weight:600;}
+        .page-btn:disabled{opacity:0.3;cursor:default;}
+        .page-info{font-size:0.8rem;color:var(--text-muted);padding:0 0.5rem;}
+        .toast{position:fixed;top:1.5rem;right:1.5rem;padding:1rem 1.5rem;border-radius:12px;font-size:0.9rem;font-weight:500;z-index:1000;transform:translateX(120%);transition:transform 0.3s;max-width:320px;}
+        .toast.show{transform:translateX(0);}
+        .toast-success{background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);color:#86efac;}
+        .toast-error{background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);color:#fca5a5;}
+        .loading{display:flex;justify-content:center;padding:3rem;}
+        .spinner{width:32px;height:32px;border:3px solid rgba(201,168,76,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        .empty-state{text-align:center;padding:4rem 2rem;color:var(--text-muted);}
+        .empty-state div:first-child{font-size:2.5rem;margin-bottom:0.8rem;}
+        .menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer;}
+        .overlay-bg{display:none;}
+        @media(max-width:768px){
+          .sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}
+          .main{margin-left:0;padding:1rem;}.menu-toggle{display:block;}
+          .overlay-bg{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+          .overlay-bg.open{opacity:1;pointer-events:all;}
+          .stats-grid{grid-template-columns:repeat(2,1fr);}.form-grid{grid-template-columns:1fr;}
+          table{font-size:0.8rem;}
+        }
+    </style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-text">📖 LughatPro</div>
+        <div><span class="logo-badge">ADMIN PANEL</span></div>
+    </div>
+    <nav class="nav-section">
+        <div class="nav-label">Overview</div>
+        <div class="nav-item active" onclick="showPage('dashboard')" id="nav-dashboard"><span class="nav-icon">📊</span> Dashboard</div>
+        <div class="nav-label">Management</div>
+        <div class="nav-item" onclick="showPage('subjects')"  id="nav-subjects"><span class="nav-icon">📚</span> Subjects</div>
+        <div class="nav-item" onclick="showPage('words')"     id="nav-words"><span class="nav-icon">📝</span> Words</div>
+        <div class="nav-item" onclick="showPage('upload')"    id="nav-upload"><span class="nav-icon">📤</span> Bulk Upload</div>
+        <div class="nav-item" onclick="showPage('users')"     id="nav-users"><span class="nav-icon">👥</span> Users</div>
+        <div class="nav-label">Tools</div>
+        <div class="nav-item" onclick="exportAll()"><span class="nav-icon">⬇️</span> Export All Words</div>
+        <div class="nav-item" onclick="downloadTemplate()"><span class="nav-icon">📋</span> Download Template</div>
+    </nav>
+    <div class="sidebar-user">
+        <div class="user-avatar" id="userInitial">A</div>
+        <div><div class="user-name" id="sidebarUsername">Admin</div><div class="user-role">Administrator</div></div>
+        <button class="logout-btn" onclick="logout()">⏏️</button>
+    </div>
+</aside>
+<div class="overlay-bg" id="overlayBg" onclick="closeSidebar()"></div>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <span style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold);">LughatPro Admin</span>
+    </div>
+
+    <!-- ─── DASHBOARD ─── -->
+    <div class="page active" id="page-dashboard">
+        <div class="page-header"><div class="page-title">📊 <span>Dashboard</span></div></div>
+        <div class="stats-grid">
+            <div class="stat-card gold"><div class="stat-icon">📚</div><div class="stat-value" id="statSubjects">—</div><div class="stat-label">Total Subjects</div></div>
+            <div class="stat-card green"><div class="stat-icon">📝</div><div class="stat-value" id="statWords">—</div><div class="stat-label">Total Words</div></div>
+            <div class="stat-card blue"><div class="stat-icon">👥</div><div class="stat-value" id="statUsers">—</div><div class="stat-label">Total Users</div></div>
+            <div class="stat-card red"><div class="stat-icon">👑</div><div class="stat-value" id="statAdmins">—</div><div class="stat-label">Admins</div></div>
+        </div>
+        <div class="table-wrap">
+            <div class="table-header">
+                <div style="font-size:1rem;font-weight:700;">📚 Subject Overview</div>
+                <button class="btn-primary" onclick="showPage('subjects')">Manage Subjects</button>
+            </div>
+            <div style="overflow-x:auto;">
+                <table><thead><tr><th>Icon</th><th>Subject</th><th>Words</th><th>Description</th><th>Actions</th></tr></thead>
+                    <tbody id="dashSubjectsTable"><tr><td colspan="5"><div class="loading"><div class="spinner"></div></div></td></tr></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── SUBJECTS ─── -->
+    <div class="page" id="page-subjects">
+        <div class="page-header">
+            <div class="page-title">📚 <span>Subjects</span></div>
+            <button class="btn-primary" onclick="openSubjectModal()">+ Add Subject</button>
+        </div>
+        <div class="table-wrap">
+            <div class="table-header">
+                <div class="search-wrap">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="subjectSearch" placeholder="Search subjects…" oninput="filterSubjects()"/>
+                </div>
+                <span style="font-size:0.85rem;color:var(--text-muted);" id="subjectCount"></span>
+            </div>
+            <div style="overflow-x:auto;">
+                <table><thead><tr><th>Icon</th><th>Name</th><th>Color</th><th>Words</th><th>Description</th><th>Actions</th></tr></thead>
+                    <tbody id="subjectsTableBody"></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── WORDS ─── -->
+    <div class="page" id="page-words">
+        <div class="page-header">
+            <div class="page-title">📝 <span>Words</span></div>
+            <button class="btn-primary" onclick="openWordModal()">+ Add Word</button>
+        </div>
+        <div class="table-wrap">
+            <div class="table-header">
+                <!-- Search + Subject filter in one row -->
+                <div class="search-row" style="flex:1;">
+                    <div class="search-wrap">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="wordSearchInput"
+                               placeholder="Search words…" oninput="debounceWordSearch()"/>
+                    </div>
+                    <!-- ✅ Subject filter — fires fetchWords on change -->
+                    <select class="filter-select" id="filterSubjectSelect"
+                            onchange="onSubjectFilterChange()">
+                        <option value="">All Subjects</option>
+                    </select>
+                </div>
+                <span style="font-size:0.85rem;color:var(--text-muted);white-space:nowrap;" id="wordCount"></span>
+            </div>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead><tr><th>English Word</th><th>Urdu Meaning</th><th>Part of Speech</th><th>Subject</th><th>Actions</th></tr></thead>
+                    <tbody id="wordsTableBody"><tr><td colspan="5"><div class="loading"><div class="spinner"></div></div></td></tr></tbody>
+                </table>
+            </div>
+            <div class="pagination" id="wordsPagination"></div>
+        </div>
+    </div>
+
+    <!-- ─── BULK UPLOAD ─── -->
+    <div class="page" id="page-upload">
+        <div class="page-header">
+            <div class="page-title">📤 <span>Bulk Upload</span></div>
+            <button class="btn-secondary" onclick="downloadTemplate()">⬇️ Download Template</button>
+        </div>
+        <div style="max-width:640px;">
+            <div style="background:var(--dark3);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:2rem;margin-bottom:1.5rem;">
+                <div class="form-group">
+                    <label class="form-label">Select Subject</label>
+                    <select class="form-select" id="uploadSubjectSelect"><option value="">Select a subject…</option></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Upload File (.xlsx, .xls, .csv)</label>
+                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('uploadFile').click()">
+                        <div style="font-size:2.5rem;margin-bottom:0.8rem;">📂</div>
+                        <div style="font-size:0.95rem;font-weight:600;color:var(--text);">Drop file here or click to browse</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;">Supports .xlsx, .xls, .csv — Max 10MB</div>
+                        <div id="uploadFileName" style="margin-top:0.8rem;font-size:0.85rem;color:var(--gold);"></div>
+                    </div>
+                    <input type="file" id="uploadFile" accept=".xlsx,.xls,.csv" style="display:none;" onchange="onFileSelected()"/>
+                </div>
+                <button class="btn-primary" onclick="doUpload()" style="width:100%;justify-content:center;">📤 Upload Words</button>
+            </div>
+            <div style="background:var(--dark3);border:1px solid rgba(59,130,246,0.15);border-radius:16px;padding:1.5rem;">
+                <div style="font-size:0.9rem;font-weight:700;color:var(--blue);margin-bottom:0.8rem;">📋 Expected Column Format</div>
+                <div style="overflow-x:auto;font-size:0.78rem;">
+                    <table><thead><tr style="background:rgba(255,255,255,0.03);">
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col A*</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col B</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col C</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col D</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col E</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col F</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col G</th>
+                        <th style="padding:0.5rem;text-align:left;color:var(--text-muted);">Col H</th>
+                    </tr></thead>
+                        <tbody><tr>
+                            <td style="padding:0.5rem;color:var(--text);">English Word</td>
+                            <td style="padding:0.5rem;color:var(--text);">Urdu Meaning</td>
+                            <td style="padding:0.5rem;color:var(--text);">English Meaning</td>
+                            <td style="padding:0.5rem;color:var(--text);">Example</td>
+                            <td style="padding:0.5rem;color:var(--text);">Part of Speech</td>
+                            <td style="padding:0.5rem;color:var(--text);">Pronunciation</td>
+                            <td style="padding:0.5rem;color:var(--text);">Synonyms</td>
+                            <td style="padding:0.5rem;color:var(--text);">Antonyms</td>
+                        </tr></tbody></table>
+                </div>
+                <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.8rem;">* Row 1 is the header and is skipped. English Word is required. The uploader also handles "English اردو" mixed cells automatically.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── USERS ─── -->
+    <div class="page" id="page-users">
+        <div class="page-header">
+            <div class="page-title">👥 <span>Users</span></div>
+            <button class="btn-primary" onclick="openUserModal()">+ Add User</button>
+        </div>
+        <div class="table-wrap">
+            <div class="table-header">
+                <div style="font-size:1rem;font-weight:700;">Registered Users</div>
+                <span style="font-size:0.85rem;color:var(--text-muted);" id="usersCount"></span>
+            </div>
+            <div style="overflow-x:auto;">
+                <table><thead><tr><th>Username</th><th>Full Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="usersTableBody"></tbody></table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- ═══ SUBJECT MODAL ═══ -->
+<div class="modal-overlay" id="subjectModal" onclick="closeModalOutside(event,'subjectModal')">
+    <div class="modal">
+        <div class="modal-header"><div class="modal-title" id="subjectModalTitle">Add Subject</div><button class="modal-close" onclick="closeModal('subjectModal')">✕</button></div>
+        <div class="modal-body">
+            <input type="hidden" id="editSubjectId"/>
+            <div class="form-group"><label class="form-label">Subject Name *</label><input type="text" class="form-input" id="subjName" placeholder="e.g. Biology"/></div>
+            <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="subjDesc" placeholder="Brief description…"></textarea></div>
+            <div class="form-grid">
+                <div class="form-group"><label class="form-label">Icon (Emoji)</label><input type="text" class="form-input" id="subjIcon" placeholder="🧬"/></div>
+                <div class="form-group"><label class="form-label">Color</label><input type="color" class="form-input" id="subjColor" value="#c9a84c" style="height:44px;padding:4px;cursor:pointer;"/></div>
+            </div>
+            <button class="btn-primary" onclick="saveSubject()" style="width:100%;justify-content:center;">💾 Save Subject</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ WORD MODAL ═══ -->
+<div class="modal-overlay" id="wordModal" onclick="closeModalOutside(event,'wordModal')">
+    <div class="modal">
+        <div class="modal-header"><div class="modal-title" id="wordModalTitle">Add Word</div><button class="modal-close" onclick="closeModal('wordModal')">✕</button></div>
+        <div class="modal-body">
+            <input type="hidden" id="editWordId"/>
+            <div class="form-grid">
+                <div class="form-group"><label class="form-label">English Word *</label><input type="text" class="form-input" id="wEngWord" placeholder="e.g. Photosynthesis"/></div>
+                <div class="form-group"><label class="form-label">Subject *</label><select class="form-select" id="wSubject"><option value="">Select…</option></select></div>
+            </div>
+            <div class="form-group"><label class="form-label">Urdu Meaning (اردو معنی)</label><input type="text" class="form-input urdu" id="wUrduMeaning" placeholder="اردو میں معنی لکھیں" dir="rtl" lang="ur"/></div>
+            <div class="form-group"><label class="form-label">English Meaning</label><textarea class="form-textarea" id="wEngMeaning" placeholder="Definition in English…"></textarea></div>
+            <div class="form-group"><label class="form-label">Example Sentence</label><textarea class="form-textarea" id="wExample" placeholder="Use in a sentence…"></textarea></div>
+            <div class="form-grid">
+                <div class="form-group"><label class="form-label">Part of Speech</label>
+                    <select class="form-select" id="wPos">
+                        <option value="">Select…</option><option>Noun</option><option>Verb</option><option>Adjective</option>
+                        <option>Adverb</option><option>Pronoun</option><option>Preposition</option><option>Conjunction</option><option>Interjection</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">Pronunciation</label><input type="text" class="form-input" id="wPronun" placeholder="/ˌfəʊtəʊˈsɪnθɪsɪs/"/></div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group"><label class="form-label">Synonyms</label><input type="text" class="form-input" id="wSynonyms" placeholder="comma, separated"/></div>
+                <div class="form-group"><label class="form-label">Antonyms</label><input type="text" class="form-input" id="wAntonyms" placeholder="comma, separated"/></div>
+            </div>
+            <button class="btn-primary" onclick="saveWord()" style="width:100%;justify-content:center;">💾 Save Word</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ USER MODAL ═══ -->
+<div class="modal-overlay" id="userModal" onclick="closeModalOutside(event,'userModal')">
+    <div class="modal">
+        <div class="modal-header"><div class="modal-title">Add New User</div><button class="modal-close" onclick="closeModal('userModal')">✕</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="uFullName" placeholder="Full name"/></div>
+            <div class="form-grid">
+                <div class="form-group"><label class="form-label">Username *</label><input type="text" class="form-input" id="uUsername" placeholder="username"/></div>
+                <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" id="uEmail" placeholder="email@example.com"/></div>
+            </div>
+            <div class="form-group"><label class="form-label">Password *</label><input type="password" class="form-input" id="uPassword" placeholder="Min 6 characters"/></div>
+            <div class="form-group"><label class="form-label">Role</label>
+                <select class="form-select" id="uRole"><option value="ROLE_MEMBER">Member</option><option value="ROLE_ADMIN">Admin</option></select>
+            </div>
+            <button class="btn-primary" onclick="saveUser()" style="width:100%;justify-content:center;">💾 Create User</button>
+        </div>
+    </div>
+</div>
+
+<script>
+<!--    const API = 'http://localhost:8080/api';-->
+    fetch("/api/auth/login");
+    let authToken = '';
+    let subjects   = [];
+    let users      = [];
+    let wordPage   = 0;
+    let wordSearchKw     = '';
+    let wordSearchTimer;
+
+    // ── Auth guard ────────────────────────────────────────────────────────────
+    const userStr = localStorage.getItem('user');
+    if (!userStr) { window.location.href = 'index.html'; }
+    const user = JSON.parse(userStr);
+    authToken = user.token;
+    if (user.role !== 'ROLE_ADMIN') { window.location.href = 'member.html'; }
+    document.getElementById('userInitial').textContent   = (user.username || 'A')[0].toUpperCase();
+    document.getElementById('sidebarUsername').textContent = user.fullName || user.username;
+
+    const H = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` });
+
+    // ── Toast ─────────────────────────────────────────────────────────────────
+    function showToast(msg, isError = false) {
+      const t = document.getElementById('toast');
+      t.textContent = (isError ? '❌ ' : '✅ ') + msg;
+      t.className = 'toast ' + (isError ? 'toast-error' : 'toast-success') + ' show';
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ── Navigation ────────────────────────────────────────────────────────────
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      const nav = document.getElementById('nav-' + name);
+      if (nav) nav.classList.add('active');
+      closeSidebar();
+      if (name === 'dashboard') loadDashboard();
+      if (name === 'subjects')  loadSubjectsPage();
+      if (name === 'words')     loadWordsPage();
+      if (name === 'users')     loadUsers();
+      if (name === 'upload')    loadUploadSubjects();
+    }
+
+    // ── Load subjects from API ────────────────────────────────────────────────
+    async function loadSubjectsData() {
+      const res = await fetch(`${API}/subjects`, { headers: H() });
+      subjects = await res.json();
+      return subjects;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  DASHBOARD
+    // ════════════════════════════════════════════════════════════════
+    async function loadDashboard() {
+      await loadSubjectsData();
+      document.getElementById('statSubjects').textContent = subjects.length;
+      fetch(`${API}/words/stats`, { headers: H() })
+        .then(r => r.json()).then(d => {
+          document.getElementById('statWords').textContent = (d.totalWords || 0).toLocaleString();
+        });
+      fetch(`${API}/users`, { headers: H() })
+        .then(r => r.json()).then(u => {
+          users = u;
+          document.getElementById('statUsers').textContent  = u.length;
+          document.getElementById('statAdmins').textContent = u.filter(x => x.role === 'ROLE_ADMIN').length;
+        });
+      document.getElementById('dashSubjectsTable').innerHTML = subjects.map(s => `
+        <tr>
+          <td style="font-size:1.4rem;">${s.icon || '📚'}</td>
+          <td><strong>${escHtml(s.name)}</strong></td>
+          <td><span class="badge badge-gold">${s.wordCount || 0}</span></td>
+          <td style="color:var(--text-muted);font-size:0.82rem;">${escHtml(s.description || '')}</td>
+          <td><button class="btn-edit" onclick="editSubjectFromDash(${s.id})">✏️ Edit</button></td>
+        </tr>`).join('');
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  SUBJECTS PAGE
+    // ════════════════════════════════════════════════════════════════
+    async function loadSubjectsPage() {
+      await loadSubjectsData();
+      document.getElementById('subjectCount').textContent = subjects.length + ' subjects';
+      renderSubjectsTable(subjects);
+    }
+
+    function renderSubjectsTable(data) {
+      document.getElementById('subjectsTableBody').innerHTML = data.map(s => `
+        <tr>
+          <td style="font-size:1.4rem;">${s.icon || '📚'}</td>
+          <td><strong>${escHtml(s.name)}</strong></td>
+          <td><span style="display:inline-block;width:18px;height:18px;border-radius:4px;background:${s.color || '#c9a84c'};vertical-align:middle;"></span></td>
+          <td><span class="badge badge-gold">${s.wordCount || 0}</span></td>
+          <td style="color:var(--text-muted);font-size:0.82rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(s.description || '')}</td>
+          <td>
+            <div style="display:flex;gap:0.4rem;">
+              <button class="btn-edit"   onclick="editSubject(${s.id})">✏️ Edit</button>
+              <button class="btn-danger" onclick="deleteSubject(${s.id},'${escHtml(s.name)}')">🗑️</button>
+            </div>
+          </td>
+        </tr>`).join('') || '<tr><td colspan="6"><div class="empty-state">No subjects found</div></td></tr>';
+    }
+
+    function filterSubjects() {
+      const kw = document.getElementById('subjectSearch').value.toLowerCase();
+      renderSubjectsTable(subjects.filter(s => s.name.toLowerCase().includes(kw)));
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  WORDS PAGE  ← THIS IS THE FIXED SECTION
+    // ════════════════════════════════════════════════════════════════
+    async function loadWordsPage() {
+      // Load subjects first so the filter dropdown is populated
+      await loadSubjectsData();
+
+      // Populate the subject filter <select>
+      const sel = document.getElementById('filterSubjectSelect');
+      const currentVal = sel.value; // preserve selection if revisiting page
+      sel.innerHTML = '<option value="">All Subjects</option>'
+        + subjects.map(s => `<option value="${s.id}">${s.icon || ''} ${s.name}</option>`).join('');
+      if (currentVal) sel.value = currentVal; // restore
+
+      // Reset pagination & search state when opening page fresh
+      wordPage     = 0;
+      wordSearchKw = '';
+      document.getElementById('wordSearchInput').value = '';
+
+      await fetchWords();
+    }
+
+    // Called when admin changes the subject dropdown
+    function onSubjectFilterChange() {
+      wordPage     = 0;                // go back to page 1
+      wordSearchKw = '';               // clear any active search
+      document.getElementById('wordSearchInput').value = '';
+      fetchWords();
+    }
+
+    // ✅ FIXED fetchWords — clean, no conflicting fallback logic
+    async function fetchWords() {
+      const tbody = document.getElementById('wordsTableBody');
+      tbody.innerHTML = '<tr><td colspan="5"><div class="loading"><div class="spinner"></div></div></td></tr>';
+
+      const subjectId = document.getElementById('filterSubjectSelect').value; // "" or "123"
+      const keyword   = wordSearchKw.trim();
+      let url;
+
+      if (keyword) {
+        // ── Keyword search ──────────────────────────────────────────
+        if (subjectId) {
+          // Search within a specific subject
+          url = `${API}/words/subject/${subjectId}/search?keyword=${encodeURIComponent(keyword)}&page=${wordPage}&size=25`;
+        } else {
+          // Global search across all subjects
+          url = `${API}/words/global-search?keyword=${encodeURIComponent(keyword)}&page=${wordPage}&size=25`;
+        }
+      } else {
+        // ── No keyword ──────────────────────────────────────────────
+        if (subjectId) {
+          // Show words for the selected subject
+          url = `${API}/words/subject/${subjectId}?page=${wordPage}&size=25`;
+        } else {
+          // Show ALL words (new endpoint GET /api/words)
+          url = `${API}/words?page=${wordPage}&size=25`;
+        }
+      }
+
+      try {
+        const res  = await fetch(url, { headers: H() });
+        const data = await res.json();
+
+        // Update counter label
+        const subjectLabel = subjectId
+          ? subjects.find(s => String(s.id) === subjectId)?.name || 'Subject'
+          : 'All Subjects';
+        document.getElementById('wordCount').textContent =
+          `${(data.totalItems || 0).toLocaleString()} words — ${subjectLabel}`;
+
+        // Render rows
+        const rows = (data.content || []);
+        tbody.innerHTML = rows.length ? rows.map(w => `
+          <tr>
+            <td>
+              <strong>${escHtml(w.englishWord)}</strong>
+              ${w.pronunciation ? `<div style="font-size:0.7rem;color:var(--text-muted);">${escHtml(w.pronunciation)}</div>` : ''}
+            </td>
+            <td class="urdu" style="font-size:1rem;">${escHtml(w.urduMeaning || '—')}</td>
+            <td>${w.partOfSpeech ? `<span class="badge badge-blue">${escHtml(w.partOfSpeech)}</span>` : '—'}</td>
+            <td><span class="badge badge-gold">${escHtml(w.subjectName || '—')}</span></td>
+            <td>
+              <div style="display:flex;gap:0.4rem;">
+                <button class="btn-edit"   onclick='editWord(${JSON.stringify(w).replace(/'/g,"&#39;")})'>✏️</button>
+                <button class="btn-danger" onclick="deleteWord(${w.id},'${escHtml(w.englishWord)}')">🗑️</button>
+              </div>
+            </td>
+          </tr>`) .join('')
+        : '<tr><td colspan="5"><div class="empty-state"><div>📭</div>No words found</div></td></tr>';
+
+        renderWordsPagination(data);
+      } catch(e) {
+        tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div>⚠️</div>Error loading words. Check console.</div></td></tr>';
+        console.error('fetchWords error:', e);
+      }
+    }
+
+    function debounceWordSearch() {
+      clearTimeout(wordSearchTimer);
+      wordSearchTimer = setTimeout(() => {
+        wordSearchKw = document.getElementById('wordSearchInput').value.trim();
+        wordPage = 0;
+        fetchWords();
+      }, 400);
+    }
+
+    function renderWordsPagination(data) {
+      const cont = document.getElementById('wordsPagination');
+      if (!data.totalPages || data.totalPages <= 1) { cont.innerHTML = ''; return; }
+      let html = `<button class="page-btn" ${wordPage === 0 ? 'disabled' : ''} onclick="changeWordPage(${wordPage - 1})">‹ Prev</button>`;
+      const start = Math.max(0, wordPage - 2);
+      const end   = Math.min(data.totalPages - 1, wordPage + 2);
+      if (start > 0) html += `<button class="page-btn" onclick="changeWordPage(0)">1</button><span class="page-info">…</span>`;
+      for (let i = start; i <= end; i++) {
+        html += `<button class="page-btn ${i === wordPage ? 'active' : ''}" onclick="changeWordPage(${i})">${i + 1}</button>`;
+      }
+      if (end < data.totalPages - 1) html += `<span class="page-info">…</span><button class="page-btn" onclick="changeWordPage(${data.totalPages - 1})">${data.totalPages}</button>`;
+      html += `<button class="page-btn" ${wordPage === data.totalPages - 1 ? 'disabled' : ''} onclick="changeWordPage(${wordPage + 1})">Next ›</button>`;
+      html += `<span class="page-info">Page ${wordPage + 1} / ${data.totalPages}</span>`;
+      cont.innerHTML = html;
+    }
+
+    function changeWordPage(p) { wordPage = p; fetchWords(); window.scrollTo(0,0); }
+
+    // ════════════════════════════════════════════════════════════════
+    //  USERS PAGE
+    // ════════════════════════════════════════════════════════════════
+    async function loadUsers() {
+      const tbody = document.getElementById('usersTableBody');
+      try {
+        const res = await fetch(`${API}/users`, { headers: H() });
+        users = await res.json();
+        document.getElementById('usersCount').textContent = users.length + ' users';
+        tbody.innerHTML = users.map(u => `
+          <tr>
+            <td><strong>${escHtml(u.username)}</strong></td>
+            <td>${escHtml(u.fullName || '—')}</td>
+            <td style="color:var(--text-muted);font-size:0.85rem;">${escHtml(u.email || '')}</td>
+            <td>${u.role === 'ROLE_ADMIN' ? '<span class="badge badge-red">Admin</span>' : '<span class="badge badge-green">Member</span>'}</td>
+            <td>${u.active ? '<span class="badge badge-green">Active</span>' : '<span class="badge badge-red">Inactive</span>'}</td>
+            <td>
+              <div style="display:flex;gap:0.4rem;">
+                <button class="btn-edit"   onclick="toggleUserActive(${u.id})">${u.active ? 'Deactivate' : 'Activate'}</button>
+                <button class="btn-danger" onclick="deleteUser(${u.id},'${escHtml(u.username)}')">🗑️</button>
+              </div>
+            </td>
+          </tr>`).join('') || '<tr><td colspan="6"><div class="empty-state">No users found</div></td></tr>';
+      } catch(e) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">Error loading users</div></td></tr>'; }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  BULK UPLOAD
+    // ════════════════════════════════════════════════════════════════
+    async function loadUploadSubjects() {
+      await loadSubjectsData();
+      document.getElementById('uploadSubjectSelect').innerHTML =
+        '<option value="">Select a subject…</option>'
+        + subjects.map(s => `<option value="${s.id}">${s.icon || ''} ${s.name}</option>`).join('');
+    }
+
+    function onFileSelected() {
+      const f = document.getElementById('uploadFile').files[0];
+      document.getElementById('uploadFileName').textContent = f ? '📎 ' + f.name : '';
+    }
+
+    async function doUpload() {
+      const subjectId = document.getElementById('uploadSubjectSelect').value;
+      const file      = document.getElementById('uploadFile').files[0];
+      if (!subjectId) { showToast('Please select a subject', true); return; }
+      if (!file)      { showToast('Please select a file',    true); return; }
+      const fd = new FormData();
+      fd.append('file', file);
+      try {
+        const res  = await fetch(`${API}/words/bulk-upload/${subjectId}`,
+                      { method: 'POST', headers: { 'Authorization': `Bearer ${authToken}` }, body: fd });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(data.message);
+          document.getElementById('uploadFile').value = '';
+          document.getElementById('uploadFileName').textContent = '';
+        } else showToast(data.message || 'Upload failed', true);
+      } catch(e) { showToast('Upload failed: ' + e.message, true); }
+    }
+
+    async function downloadTemplate() {
+      try {
+        const res = await fetch(`${API}/words/template`, { headers: H() });
+        if (!res.ok) throw new Error();
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'words_template.xlsx'; a.click();
+        URL.revokeObjectURL(url);
+      } catch(e) { showToast('Failed to download template', true); }
+    }
+
+    async function exportAll() {
+      try {
+        const res = await fetch(`${API}/words/export`, { headers: H() });
+        if (!res.ok) throw new Error();
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'all_words.xlsx'; a.click();
+        URL.revokeObjectURL(url);
+        showToast('Export started!');
+      } catch(e) { showToast('Export failed', true); }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  SUBJECT CRUD
+    // ════════════════════════════════════════════════════════════════
+    function openSubjectModal(data = null) {
+      document.getElementById('subjectModalTitle').textContent = data ? 'Edit Subject' : 'Add Subject';
+      document.getElementById('editSubjectId').value = data?.id   || '';
+      document.getElementById('subjName').value      = data?.name        || '';
+      document.getElementById('subjDesc').value      = data?.description || '';
+      document.getElementById('subjIcon').value      = data?.icon        || '';
+      document.getElementById('subjColor').value     = data?.color       || '#c9a84c';
+      openModal('subjectModal');
+    }
+
+    function editSubject(id) { openSubjectModal(subjects.find(s => s.id === id)); }
+    function editSubjectFromDash(id) { showPage('subjects'); setTimeout(() => openSubjectModal(subjects.find(s => s.id === id)), 100); }
+
+    async function saveSubject() {
+      const id   = document.getElementById('editSubjectId').value;
+      const body = {
+        name:        document.getElementById('subjName').value.trim(),
+        description: document.getElementById('subjDesc').value.trim(),
+        icon:        document.getElementById('subjIcon').value.trim(),
+        color:       document.getElementById('subjColor').value
+      };
+      if (!body.name) { showToast('Subject name is required', true); return; }
+      try {
+        const res = await fetch(
+          id ? `${API}/subjects/${id}` : `${API}/subjects`,
+          { method: id ? 'PUT' : 'POST', headers: H(), body: JSON.stringify(body) }
+        );
+        if (res.ok) { showToast(id ? 'Subject updated!' : 'Subject created!'); closeModal('subjectModal'); loadSubjectsPage(); }
+        else showToast('Failed to save subject', true);
+      } catch(e) { showToast('Error: ' + e.message, true); }
+    }
+
+    async function deleteSubject(id, name) {
+      if (!confirm(`Delete subject "${name}"?\nAll words in it will also be deleted!`)) return;
+      try {
+        const res = await fetch(`${API}/subjects/${id}`, { method: 'DELETE', headers: H() });
+        if (res.ok) { showToast('Subject deleted!'); loadSubjectsPage(); }
+        else showToast('Failed to delete subject', true);
+      } catch(e) { showToast('Error', true); }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  WORD CRUD
+    // ════════════════════════════════════════════════════════════════
+    function populateWordSubjects(selectedId = null) {
+      document.getElementById('wSubject').innerHTML =
+        '<option value="">Select subject…</option>'
+        + subjects.map(s => `<option value="${s.id}" ${String(s.id) === String(selectedId) ? 'selected' : ''}>${s.name}</option>`).join('');
+    }
+
+    function openWordModal(data = null) {
+      document.getElementById('wordModalTitle').textContent  = data ? 'Edit Word' : 'Add Word';
+      document.getElementById('editWordId').value            = data?.id              || '';
+      document.getElementById('wEngWord').value              = data?.englishWord     || '';
+      document.getElementById('wUrduMeaning').value          = data?.urduMeaning     || '';
+      document.getElementById('wEngMeaning').value           = data?.englishMeaning  || '';
+      document.getElementById('wExample').value              = data?.exampleSentence || '';
+      document.getElementById('wPos').value                  = data?.partOfSpeech    || '';
+      document.getElementById('wPronun').value               = data?.pronunciation   || '';
+      document.getElementById('wSynonyms').value             = data?.synonyms        || '';
+      document.getElementById('wAntonyms').value             = data?.antonyms        || '';
+      populateWordSubjects(data?.subjectId);
+      openModal('wordModal');
+    }
+
+    function editWord(w) { openWordModal(w); }
+
+    async function saveWord() {
+      const id   = document.getElementById('editWordId').value;
+      const body = {
+        englishWord:     document.getElementById('wEngWord').value.trim(),
+        urduMeaning:     document.getElementById('wUrduMeaning').value.trim(),
+        englishMeaning:  document.getElementById('wEngMeaning').value.trim(),
+        exampleSentence: document.getElementById('wExample').value.trim(),
+        partOfSpeech:    document.getElementById('wPos').value,
+        pronunciation:   document.getElementById('wPronun').value.trim(),
+        synonyms:        document.getElementById('wSynonyms').value.trim(),
+        antonyms:        document.getElementById('wAntonyms').value.trim(),
+        subjectId:       parseInt(document.getElementById('wSubject').value)
+      };
+      if (!body.englishWord) { showToast('English word is required', true); return; }
+      if (!body.subjectId)   { showToast('Please select a subject', true);  return; }
+      try {
+        const res = await fetch(
+          id ? `${API}/words/${id}` : `${API}/words`,
+          { method: id ? 'PUT' : 'POST', headers: H(), body: JSON.stringify(body) }
+        );
+        if (res.ok) { showToast(id ? 'Word updated!' : 'Word added!'); closeModal('wordModal'); fetchWords(); }
+        else showToast('Failed to save word', true);
+      } catch(e) { showToast('Error: ' + e.message, true); }
+    }
+
+    async function deleteWord(id, name) {
+      if (!confirm(`Delete word "${name}"?`)) return;
+      try {
+        const res = await fetch(`${API}/words/${id}`, { method: 'DELETE', headers: H() });
+        if (res.ok) { showToast('Word deleted!'); fetchWords(); }
+        else showToast('Failed to delete', true);
+      } catch(e) { showToast('Error', true); }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  USER CRUD
+    // ════════════════════════════════════════════════════════════════
+    function openUserModal() {
+      ['uFullName','uUsername','uEmail','uPassword'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('uRole').value = 'ROLE_MEMBER';
+      openModal('userModal');
+    }
+
+    async function saveUser() {
+      const body = {
+        fullName: document.getElementById('uFullName').value.trim(),
+        username: document.getElementById('uUsername').value.trim(),
+        email:    document.getElementById('uEmail').value.trim(),
+        password: document.getElementById('uPassword').value,
+        role:     document.getElementById('uRole').value
+      };
+      if (!body.username || !body.email || !body.password) { showToast('Fill all required fields', true); return; }
+      try {
+        const res  = await fetch(`${API}/users`, { method: 'POST', headers: H(), body: JSON.stringify(body) });
+        const data = await res.json();
+        if (res.ok) { showToast('User created!'); closeModal('userModal'); loadUsers(); }
+        else showToast(data.message || 'Failed to create user', true);
+      } catch(e) { showToast('Error', true); }
+    }
+
+    async function toggleUserActive(id) {
+      try {
+        const res = await fetch(`${API}/users/${id}/toggle-active`, { method: 'PUT', headers: H() });
+        if (res.ok) { showToast('Status updated!'); loadUsers(); }
+      } catch(e) {}
+    }
+
+    async function deleteUser(id, name) {
+      if (!confirm(`Delete user "${name}"?`)) return;
+      try {
+        const res = await fetch(`${API}/users/${id}`, { method: 'DELETE', headers: H() });
+        if (res.ok) { showToast('User deleted!'); loadUsers(); }
+      } catch(e) {}
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    //  UTILS
+    // ════════════════════════════════════════════════════════════════
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+    function closeModalOutside(e, id) { if (e.target.id === id) closeModal(id); }
+    function escHtml(str) {
+      if (!str) return '';
+      const d = document.createElement('div');
+      d.appendChild(document.createTextNode(str));
+      return d.innerHTML;
+    }
+    function logout() { localStorage.clear(); window.location.href = 'index.html'; }
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlayBg').classList.toggle('open');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlayBg').classList.remove('open');
+    }
+
+    // Drag & drop on upload zone
+    const uploadZone = document.getElementById('uploadZone');
+    uploadZone.addEventListener('dragover',  e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault(); uploadZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        document.getElementById('uploadFile').files = e.dataTransfer.files;
+        onFileSelected();
+      }
+    });
+
+    // Init
+    loadDashboard();
+</script>
+</body>
+</html>
