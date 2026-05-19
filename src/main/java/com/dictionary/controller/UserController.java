@@ -79,4 +79,16 @@ public class UserController {
                 .createdAt(user.getCreatedAt())
                 .build();
     }
+    @PostMapping("/create-admin")
+    public String createAdmin() {
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("admin123"));
+        admin.setRole(Role.valueOf("Admin"));
+        admin.setActive(true);
+
+        userRepository.save(admin);
+
+        return "Admin created";
+    }
 }
