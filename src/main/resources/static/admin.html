@@ -1779,13 +1779,11 @@
       d.appendChild(document.createTextNode(str));
       return d.innerHTML;
     }
-    function logout() {
-    const confirmLogout = confirm("Are you sure you want to logout?");
-    if(confirmLogout){
-        localStorage.removeItem("token");
-        window.location.href = "login.html";
+    function logout() { localStorage.clear(); window.location.href = 'index.html'; }
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlayBg').classList.toggle('open');
     }
-}
     function closeSidebar() {
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlayBg').classList.remove('open');

@@ -22,6 +22,12 @@
           background: var(--dark);
           min-height: 100vh;
           overflow-x: hidden;
+
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
         }
         .urdu { font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif; direction: rtl; }
 
@@ -54,8 +60,17 @@
         }
 
         /* Main container */
-        .container { position: relative; z-index: 10; min-height: 100vh;
-          display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
         /* Card */
         .auth-card {
