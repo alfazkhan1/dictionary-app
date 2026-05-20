@@ -381,7 +381,7 @@
           localStorage.setItem('user', JSON.stringify(data));
           showAlert('loginAlert', 'Login successful! Redirecting...', false);
           setTimeout(() => {
-            window.location.href = data.role === 'ROLE_ADMIN' ? 'admin.html' : 'member.html';
+            window.location.href = data.role === 'ROLE_ADMIN' ? 'admin.html' : '/member';
           }, 800);
         } else {
           showAlert('loginAlert', data.message || 'Login failed. Check credentials.');
@@ -434,7 +434,7 @@
       try {
         const u = JSON.parse(existingUser);
         if (u.token) {
-          window.location.href = u.role === 'ROLE_ADMIN' ? 'admin.html' : 'member.html';
+          window.location.href = u.role === 'ROLE_ADMIN' ? '/admin' : '/member';
         }
       } catch(e) { localStorage.clear(); }
     }

@@ -348,7 +348,7 @@ fetch("/api/auth/login");
     if (!userStr) { window.location.href = 'index.html'; }
     const user = JSON.parse(userStr);
     authToken = user.token;
-    if (user.role === 'ROLE_ADMIN') { window.location.href = 'admin.html'; }
+    if (user.role === 'ROLE_ADMIN') { window.location.href = '/admin'; }
 
     // Init UI
     document.getElementById('userInitial').textContent = (user.username || 'M')[0].toUpperCase();
