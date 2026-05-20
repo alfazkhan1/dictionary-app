@@ -381,7 +381,7 @@
           localStorage.setItem('user', JSON.stringify(data));
           showAlert('loginAlert', 'Login successful! Redirecting...', false);
           setTimeout(() => {
-            window.location.href = data.role === 'ROLE_ADMIN' ? 'admin.html' : '/member';
+            window.location.href = data.role === 'ROLE_ADMIN' ? '/admin' : '/member';
           }, 800);
         } else {
           showAlert('loginAlert', data.message || 'Login failed. Check credentials.');
