@@ -1319,7 +1319,7 @@
 
     // ── Auth guard ────────────────────────────────────────────────────────────
     const userStr = localStorage.getItem('user');
-    if (!userStr) { window.location.href = 'index.html'; }
+    if (!userStr) { window.location.href = '/login'; }
     const user = JSON.parse(userStr);
     authToken = user.token;
     if (user.role !== 'ROLE_ADMIN') { window.location.href = '/member'; }
@@ -1779,7 +1779,7 @@
       d.appendChild(document.createTextNode(str));
       return d.innerHTML;
     }
-    function logout() { localStorage.clear(); window.location.href = 'index.html'; }
+    function logout() { localStorage.clear(); window.location.href = '/login'; }
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('open');
       document.getElementById('overlayBg').classList.toggle('open');
