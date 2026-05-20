@@ -15,4 +15,8 @@ public class PageController {
     public String memberPage() {
         return "forward:/member.html";
     }
+    @GetMapping("/ping")
+    public String ping(){
+        return "OK";
+    }
 }
