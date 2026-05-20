@@ -13,7 +13,19 @@
           --emerald: #2dd4bf; --text: #e8e8f0; --text-muted: #8b8b9a;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'DM Sans',sans-serif; background:var(--dark); color:var(--text); min-height:100vh;overflow:hidden;}
+<!--        body { font-family:'DM Sans',sans-serif; background:var(&#45;&#45;dark); color:var(&#45;&#45;text); min-height:100vh;overflow:hidden;}-->
+        body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100vh;
+
+    overflow-x: auto;
+    overflow-y: auto;
+}
         .urdu { font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; direction:rtl; line-height:2.2; font-size:1.1em; }
 
         /* Sidebar */
