@@ -162,7 +162,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/words/**").authenticated()
 
                         // ── Admin-only write endpoints ────────────────────────────
-                        .requestMatchers("/ping").permitAll()
                         .requestMatchers(HttpMethod.POST,   "/api/subjects/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,    "/api/subjects/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/subjects/**").hasRole("ADMIN")
@@ -173,7 +172,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/words/export/**").hasRole("ADMIN")
                         .requestMatchers("/api/words/template").hasRole("ADMIN")
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
-                                .requestMatchers("/","/index.html","/admin","/login","/member","/admin.html","/member.html")
+                                .requestMatchers("/","/index.html","/admin","/login","/member","/register","/ping","/admin.html","/member.html")
                         .permitAll()
 
 

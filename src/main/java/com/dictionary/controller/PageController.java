@@ -19,4 +19,12 @@ public class PageController {
     public String ping(){
         return "OK";
     }
+    @GetMapping("/login")
+    public String loginPage(){
+        return "forward:/index.html";
+    }
+    @GetMapping("/register")
+    public String registerPage(){
+        return "forward:/index.html";
+    }
 }
