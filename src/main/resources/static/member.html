@@ -1099,6 +1099,7 @@
       if (nav) nav.classList.add('active');
       closeSidebar();
       window.scrollTo(0, 0);
+      sessionStorage.setItem('currentPage', name);
     }
 
     // ── Open a subject ────────────────────────────────────────────
@@ -1367,7 +1368,9 @@
     }, { passive:true });
 
     // ── Init ──────────────────────────────────────────────────────
-    loadSubjects();
+    const savedPage = sessionStorage.getItem('currentPage') || 'home';
+showPage(savedPage);
+loadSubjects();
 </script>
 </body>
 </html>

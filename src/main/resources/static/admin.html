@@ -1380,6 +1380,7 @@
       if (name === 'words')     loadWordsPage();
       if (name === 'users')     loadUsers();
       if (name === 'upload')    loadUploadSubjects();
+       sessionStorage.setItem('currentPage', name);
     }
 
     // ── Load subjects from API ────────────────────────────────────────────────
@@ -1833,7 +1834,8 @@
     });
 
     // Init
-    loadDashboard();
+  const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
+showPage(savedPage);
 </script>
 </body>
 </html>
