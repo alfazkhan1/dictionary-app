@@ -1836,14 +1836,22 @@
     });
 
     // Init
-// ✅ Load data first, THEN restore page
 async function init() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
   const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
-  await loadSubjectsData();
-  showPage(savedPage);
+
+  const pageEl = document.getElementById('page-' + savedPage);
+  const navEl  = document.getElementById('nav-' + savedPage);
+  if (pageEl) pageEl.classList.add('active');
+  if (navEl)  navEl.classList.add('active');
+
+  if (savedPage === 'dashboard') loadDashboard();
+  else if (savedPage === 'subjects')  { await loadSubjectsData(); loadSubjectsPage(); }
+  else if (savedPage === 'words')     { await loadSubjectsData(); loadWordsPage(); }
+  else if (savedPage === 'users')     loadUsers();
+  else if (savedPage === 'upload')    { await loadSubjectsData(); loadUploadSubjects(); }
 }
 init();
 </script>
