@@ -1372,17 +1372,23 @@
 
     // ── Init ──────────────────────────────────────────────────────
   // ✅ Load data first, THEN restore page
-async function init() {
+aasync function init() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-  await loadSubjects();
   const savedPage      = sessionStorage.getItem('currentPage')     || 'home';
   const savedSubjectId = sessionStorage.getItem('currentSubjectId');
 
   if (savedPage === 'subject' && savedSubjectId) {
-    await openSubject(parseInt(savedSubjectId));
+    await loadSubjects();                          // loads subjects first
+    await openSubject(parseInt(savedSubjectId));   // then opens subject
   } else if (savedPage === 'search') {
+    await loadSubjects();
     showPage('search');
+  } else {
+    // ✅ home — show page FIRST then load content into it
+    document.getElementById('page-home').classList.add('active');
+    document.getElementById('nav-home').classList.add('active');
+    await loadSubjects();                          // fills the home content
   }
 }
 init();

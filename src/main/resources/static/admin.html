@@ -1839,12 +1839,22 @@
     // Init
 // ✅ Load data first, THEN restore page
 async function init() {
-  // Hide all pages instantly before anything renders
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-  await loadSubjectsData();
   const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
-  showPage(savedPage);
+
+  // ✅ Show the page shell instantly — no waiting
+  const pageEl = document.getElementById('page-' + savedPage);
+  const navEl  = document.getElementById('nav-' + savedPage);
+  if (pageEl) pageEl.classList.add('active');
+  if (navEl)  navEl.classList.add('active');
+
+  // ✅ Then load only what that page needs
+  if (savedPage === 'dashboard') loadDashboard();
+  else if (savedPage === 'subjects')  { await loadSubjectsData(); loadSubjectsPage(); }
+  else if (savedPage === 'words')     { await loadSubjectsData(); loadWordsPage(); }
+  else if (savedPage === 'upload')    { await loadSubjectsData(); loadUploadSubjects(); }
+  else if (savedPage === 'users')     loadUsers();
 }
 init();
 </script>
