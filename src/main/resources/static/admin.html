@@ -1834,8 +1834,13 @@
     });
 
     // Init
+// ✅ Load data first, THEN restore page
+async function init() {
+  await loadSubjectsData();
   const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
-showPage(savedPage);
+  showPage(savedPage);
+}
+init();
 </script>
 </body>
 </html>

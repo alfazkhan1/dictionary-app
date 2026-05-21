@@ -1368,9 +1368,13 @@
     }, { passive:true });
 
     // ── Init ──────────────────────────────────────────────────────
-    const savedPage = sessionStorage.getItem('currentPage') || 'home';
-showPage(savedPage);
-loadSubjects();
+  // ✅ Load data first, THEN restore page
+async function init() {
+  await loadSubjects();
+  const savedPage = sessionStorage.getItem('currentPage') || 'home';
+  if (savedPage !== 'home') showPage(savedPage);
+}
+init();
 </script>
 </body>
 </html>
