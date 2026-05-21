@@ -2,6 +2,9 @@
 
 A comprehensive, production-ready dictionary web application supporting multiple subjects with bilingual search (English-Urdu), user authentication (Admin/Member roles), and bulk upload capabilities.
 
+
+# 📖 LughatPro — A professional English ↔ Urdu dictionary PWA built with Spring Boot, MySQL, and JWT authentication, featuring 13 subjects, bulk word upload, admin/member roles, and installable as a mobile app.
+
 ## 🌟 Features
 
 ### 👑 Admin Features
@@ -46,7 +49,9 @@ A comprehensive, production-ready dictionary web application supporting multiple
 
 - **Live Page**
 
-Login Page - 
+- Login Page Link - https://dictionary-app-xsxj.onrender.com/login
 
 
-Member Dashboard -
+- Member Dashboard Demo username - member1
+- Member Dashboard Demo password - member123
+
