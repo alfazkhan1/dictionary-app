@@ -872,6 +872,8 @@
 
           /* Page title smaller */
           .page-title { font-size:1.4rem; }
+          .page { display: none; }
+           .page.active { display: block; }
 
           /* Modal is already bottom-sheet, just ensure padding */
           .modal-body { padding:1.2rem; padding-bottom:env(safe-area-inset-bottom, 2rem); }
@@ -1107,6 +1109,7 @@
       currentSubjectId = id;
       currentPage      = 0;
       currentSearchKw  = '';
+       sessionStorage.setItem('currentSubjectId', id);
       document.getElementById('subjectSearch').value = '';
 
       const s = subjects.find(x => x.id === id);
@@ -1370,9 +1373,17 @@
     // ── Init ──────────────────────────────────────────────────────
   // ✅ Load data first, THEN restore page
 async function init() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
   await loadSubjects();
-  const savedPage = sessionStorage.getItem('currentPage') || 'home';
-  if (savedPage !== 'home') showPage(savedPage);
+  const savedPage      = sessionStorage.getItem('currentPage')     || 'home';
+  const savedSubjectId = sessionStorage.getItem('currentSubjectId');
+
+  if (savedPage === 'subject' && savedSubjectId) {
+    await openSubject(parseInt(savedSubjectId));
+  } else if (savedPage === 'search') {
+    showPage('search');
+  }
 }
 init();
 </script>
