@@ -1372,20 +1372,19 @@
 
     // ── Navigation ────────────────────────────────────────────────────────────
     function showPage(name) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById('page-' + name).classList.add('active');
-      const nav = document.getElementById('nav-' + name);
-      if (nav) nav.classList.add('active');
-      closeSidebar();
-      if (name === 'dashboard') loadDashboard();
-      if (name === 'subjects')  loadSubjectsPage();
-      if (name === 'words')     loadWordsPage();
-      if (name === 'users')     loadUsers();
-      if (name === 'upload')    loadUploadSubjects();
-       sessionStorage.setItem('currentPage', name);
-    }
-
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const nav = document.getElementById('nav-' + name);
+  if (nav) nav.classList.add('active');
+  closeSidebar();
+  sessionStorage.setItem('currentPage', name);
+  if (name === 'dashboard') loadDashboard();
+  else if (name === 'subjects')  loadSubjectsPage();
+  else if (name === 'words')     loadWordsPage();
+  else if (name === 'users')     loadUsers();
+  else if (name === 'upload')    loadUploadSubjects();
+}
     // ── Load subjects from API ────────────────────────────────────────────────
     async function loadSubjectsData() {
       const res = await fetch(`${API}/subjects`, { headers: H() });
@@ -1840,21 +1839,11 @@
 // ✅ Load data first, THEN restore page
 async function init() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(p => p.classList.remove('active'));
 
   const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
-
-  // ✅ Show the page shell instantly — no waiting
-  const pageEl = document.getElementById('page-' + savedPage);
-  const navEl  = document.getElementById('nav-' + savedPage);
-  if (pageEl) pageEl.classList.add('active');
-  if (navEl)  navEl.classList.add('active');
-
-  // ✅ Then load only what that page needs
-  if (savedPage === 'dashboard') loadDashboard();
-  else if (savedPage === 'subjects')  { await loadSubjectsData(); loadSubjectsPage(); }
-  else if (savedPage === 'words')     { await loadSubjectsData(); loadWordsPage(); }
-  else if (savedPage === 'upload')    { await loadSubjectsData(); loadUploadSubjects(); }
-  else if (savedPage === 'users')     loadUsers();
+  await loadSubjectsData();
+  showPage(savedPage);
 }
 init();
 </script>

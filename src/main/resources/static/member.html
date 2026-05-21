@@ -1094,15 +1094,15 @@
 
     // ── Page navigation ───────────────────────────────────────────
     function showPage(name) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById('page-' + name).classList.add('active');
-      const nav = document.getElementById('nav-' + name);
-      if (nav) nav.classList.add('active');
-      closeSidebar();
-      window.scrollTo(0, 0);
-      sessionStorage.setItem('currentPage', name);
-    }
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const nav = document.getElementById('nav-' + name);
+  if (nav) nav.classList.add('active');
+  closeSidebar();
+  window.scrollTo(0, 0);
+  sessionStorage.setItem('currentPage', name);
+}
 
     // ── Open a subject ────────────────────────────────────────────
     async function openSubject(id) {
@@ -1372,23 +1372,24 @@
 
     // ── Init ──────────────────────────────────────────────────────
   // ✅ Load data first, THEN restore page
-aasync function init() {
+async function init() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-  const savedPage      = sessionStorage.getItem('currentPage')     || 'home';
+  const savedPage      = sessionStorage.getItem('currentPage') || 'home';
   const savedSubjectId = sessionStorage.getItem('currentSubjectId');
 
   if (savedPage === 'subject' && savedSubjectId) {
-    await loadSubjects();                          // loads subjects first
-    await openSubject(parseInt(savedSubjectId));   // then opens subject
+    await loadSubjects();
+    await openSubject(parseInt(savedSubjectId));
   } else if (savedPage === 'search') {
     await loadSubjects();
-    showPage('search');
+    document.getElementById('page-search').classList.add('active');
+    document.getElementById('nav-search').classList.add('active');
   } else {
-    // ✅ home — show page FIRST then load content into it
+    // home
     document.getElementById('page-home').classList.add('active');
     document.getElementById('nav-home').classList.add('active');
-    await loadSubjects();                          // fills the home content
+    await loadSubjects();
   }
 }
 init();
