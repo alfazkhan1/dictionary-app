@@ -172,7 +172,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/words/export/**").hasRole("ADMIN")
                         .requestMatchers("/api/words/template").hasRole("ADMIN")
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
-                                .requestMatchers("/","/index.html","/admin","/login","/member","/register","/ping","/admin.html","/member.html")
+                                .requestMatchers("/","/index.html","/admin","/login","/member","/register","/ping","/admin.html","/member.html",
+                                        "/sw.js", "/manifest.json", "/offline.html", "/icons/**","/favicon.png")
                         .permitAll()
 
 
