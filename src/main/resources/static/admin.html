@@ -1847,7 +1847,7 @@ async function init() {
   if (pageEl) pageEl.classList.add('active');
   if (navEl)  navEl.classList.add('active');
 
-  if (savedPage === 'dashboard') loadDashboard();
+  if (savedPage === 'dashboard') await loadDashboard();
   else if (savedPage === 'subjects')  { await loadSubjectsData(); loadSubjectsPage(); }
   else if (savedPage === 'words')     { await loadSubjectsData(); loadWordsPage(); }
   else if (savedPage === 'users')     loadUsers();
