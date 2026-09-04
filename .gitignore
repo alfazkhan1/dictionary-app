@@ -68,7 +68,7 @@ Thumbs.db
 # =========================
 .env
 application-local.properties
-src/main/java/com/dictionary/init/DataInitializer.java
+#src/main/java/com/dictionary/init/DataInitializer.java
 
 # =========================
 # Database Files
@@ -85,7 +85,7 @@ uploads/
 # =========================
 # Personal Initializer
 # =========================
-src/main/java/com/dictionary/init/DataInitializer.java
+#src/main/java/com/dictionary/init/DataInitializer.java
 
 # =========================
 # Sensitive Config
